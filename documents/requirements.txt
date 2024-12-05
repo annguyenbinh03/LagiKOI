@@ -1,0 +1,22 @@
+Koi fish is one of the most popular aquarium fish breeds today. 
+With its graceful beauty and vibrant colors, Japan's national fish is not only popular with aquarium hobbyists but also attracts many breeders for the purpose of decorating their homes, gardens and doing business. 
+To meet the increasing demand of customers who need to own Koi fish originating from Japan, NJS Koi Farm needs to develop software called Koi Order System to manage the provision of services to customers who want to visit and buy Koi fish directly from famous Japanese farms.
+
+The website provides features for the customer to search for Koi fish breeds (Kohaku, Showa, Ogon, ...) raised by each Koi farm in Japan, with reference selling prices for each breeds - size - age. 
+Through the software, the customer has the ability to make Koi purchase reservation to buy fish at Japanese farms with desired proposals (breeds, farm, expected departure date, total expected budget). 
+The reservation staff reviews the Koi purchase reservation and recommends a suitable trip route through the farms and the cost the customer must pay to send a quote to the customer. 
+This quote must be approved by the manager before the customer can view it. The customer needs to confirm the quote and pay the cost through the CHPay online payment system before the customer's Koi purchase reservation will be accepted. 
+After the customer has made payment, the system allows the reservation staff to send specific information (airfare, hotel, etc.) to the customer. 
+Before 48 hours of the trip departure date, the customer can cancel the Koi purchase reservation but will have to pay airfare and hotel fee. 
+The manager has the function of assigning the consulting staff to be in charge of the Koi purchase reservation. 
+The consulting staff can only view the Koi purchase reservation assigned to him by the manager. 
+At the airport on the departure date of the trip, the consulting staff takes attendance of the customer on the trip. 
+During a trip to visit Koi farms in Japan, the consulting staff updates customer's fish purchase orders after finalizing the purchase price with the farm owner into the system. 
+To be able to order fish, the customer needs to deposit 30% of the value of the fish, this amount is deducted from the COVERED customer's wallet in the system. 
+If the amount of money in the wallet is not enough, the customer needs to top up the wallet through the function in the system. 
+At the end of the trip, the consulting staff updates the fish delivery date, and the customer can go through the system to view detailed information about the delivery date. 
+Only the manager has the ability to assign delivery staff to deliver fish to the customer. 
+After delivering the fish and receiving the customer's remaining payment, the delivery staff will confirm the Koi purchase reservation has been delivered. 
+The customer will lose his deposit when canceling the fish delivery. In case the customer refuses to receive fish delivery due to poor quality or fault from NJS Koi Farm, the fish deposit will be refunded to the customer.
+
+Our website also provide selling fish, related equipment and education blogs.
