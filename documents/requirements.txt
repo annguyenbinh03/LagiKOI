@@ -19,4 +19,4 @@ Only the manager has the ability to assign delivery staff to deliver fish to the
 After delivering the fish and receiving the customer's remaining payment, the delivery staff will confirm the Koi purchase reservation has been delivered. 
 The customer will lose his deposit when canceling the fish delivery. In case the customer refuses to receive fish delivery due to poor quality or fault from NJS Koi Farm, the fish deposit will be refunded to the customer.
 
-Our website also provide selling fish, related equipment and education blogs.
+Our website also provide functions like selling fish, related equipment and writing education blogs.
