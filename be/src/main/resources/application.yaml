@@ -1,0 +1,9 @@
+server:
+    port: 8080
+    servlet:
+        context-path: /lagikoi
+spring:
+    datasource:
+      url: "jdbc:mysql://localhost:3306/lagikoi"
+      username: root
+      password: root
