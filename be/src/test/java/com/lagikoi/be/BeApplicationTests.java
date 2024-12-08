@@ -1,4 +1,4 @@
-package com.LagiKoi.be;
+package com.lagikoi.be;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
