@@ -15,9 +15,12 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FishResponse {
     Integer id;
+    //Fish code, #001, #002
+    String code;
     String name;
     String description;
     BigDecimal price;
+    Integer stock;
     String age;
     String gender;
     String size;
