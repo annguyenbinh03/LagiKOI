@@ -2,6 +2,7 @@ package com.lagikoi.be.controller;
 
 import com.lagikoi.be.dto.request.FishCreationRequest;
 import com.lagikoi.be.dto.response.ApiResponse;
+import com.lagikoi.be.dto.response.FishCategoryResponse;
 import com.lagikoi.be.dto.response.FishResponse;
 import com.lagikoi.be.service.FishService;
 import lombok.RequiredArgsConstructor;
@@ -17,25 +18,26 @@ public class FishController {
 
     @GetMapping("/get-all")
     public ApiResponse<List<FishResponse>> getAllFish() {
-        ApiResponse<List<FishResponse>> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(fishService.getAllFish());
-        apiResponse.setCode(1000);
-        return apiResponse;
+        return ApiResponse.<List<FishResponse>>builder()
+                .code(200)
+                .result(fishService.getAllFish())
+                .build();
     }
 
     @GetMapping("/{fishId}")
     public ApiResponse<FishResponse> getAllFish(@PathVariable Integer fishId) {
-        ApiResponse<FishResponse> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(fishService.getFishInfo(fishId));
-        apiResponse.setCode(1000);
-        return apiResponse;
+        return ApiResponse.<FishResponse>builder()
+                .code(200)
+                .result(fishService.getFishInfo(fishId))
+                .build();
     }
 
+    //Return id of created fish
     @PostMapping("/create")
     public ApiResponse<Integer> createFish(@RequestBody FishCreationRequest request) {
-        ApiResponse<Integer> apiResponse = new ApiResponse<>();
-        apiResponse.setResult(fishService.createFish(request));
-        apiResponse.setCode(201);
-        return apiResponse;
+        return ApiResponse.<Integer>builder()
+                .code(200)
+                .result(fishService.createFish(request))
+                .build();
     }
 }

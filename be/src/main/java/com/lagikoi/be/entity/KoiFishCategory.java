@@ -10,6 +10,7 @@ import lombok.Setter;
 @Table(name = "koi_fish_category")
 public class KoiFishCategory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
