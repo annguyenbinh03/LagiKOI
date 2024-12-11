@@ -1,21 +1,23 @@
 package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.FishCreationRequest;
-import com.lagikoi.be.dto.response.FishResponse;
+import com.lagikoi.be.dto.request.FishImagesCreationRequest;
+import com.lagikoi.be.dto.response.FishDetailReponse;
+import com.lagikoi.be.dto.response.FishGetAllResponse;
 import com.lagikoi.be.entity.KoiFish;
 import com.lagikoi.be.entity.KoiFishCategory;
+import com.lagikoi.be.entity.KoiFishImageUrl;
 import com.lagikoi.be.entity.Product;
 import com.lagikoi.be.repository.FishCategoryRepository;
+import com.lagikoi.be.repository.FishImageUrlRepository;
 import com.lagikoi.be.repository.FishRepository;
 import com.lagikoi.be.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
-import java.math.BigDecimal;
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -25,71 +27,32 @@ public class FishService {
     private final FishRepository fishRepository;
     private final ProductRepository productRepository;
     private final FishCategoryRepository fishCategoryRepository;
+    private final FishImageUrlRepository fishImageUrlRepository;
 
-    public List<FishResponse> getAllFish() {
-        List<Object[]> result = fishRepository.getAllFish();
-        List<FishResponse> fishResponseList = new ArrayList<>();
+    public List<FishGetAllResponse> getAllFish() {
+        List<FishGetAllResponse> fishGetAllResponseList = fishRepository.getAllFish();
 
-        if (result.isEmpty()) {
+        if (fishGetAllResponseList.isEmpty())
             throw new RuntimeException("The list is empty");
-        }
 
-        for (Object[] row : result) {
-            fishResponseList.add(setInfoForFish(row));
-        }
+        getPrimaryImageForFish(fishGetAllResponseList);
 
-        return fishResponseList;
+        return fishGetAllResponseList;
     }
 
-    public FishResponse getFishInfo(Integer fishId) {
-        Object[] result = fishRepository.getFishInfo(fishId);
-        if (result == null || result.length == 0) {
-            throw new RuntimeException("Not Found Fish");
+    public FishDetailReponse getFishInfo(Integer fishId) {
+        FishDetailReponse response = fishRepository.getFishInfo(fishId);
+
+        if (response == null) {
+            throw new RuntimeException("Fish with ID " + fishId + " not found");
         }
 
-        return setInfoForFish((Object[]) result[0]);
+        response.setImages(fishImageUrlRepository.getAllFishImageUrls(fishId));
+
+        return response;
     }
 
-    private FishResponse setInfoForFish(Object[] rowData) {
-        FishResponse fishResponse = new FishResponse();
-
-        Integer fishId = 0;
-        if((Integer) rowData[0] == null) {
-            throw new RuntimeException("Fish Id is null");
-        }else{
-            fishId = (Integer) rowData[0];
-        }
-
-        fishResponse.setId(fishId);
-        fishResponse.setName((String) rowData[1]);
-        fishResponse.setDescription((String) rowData[2]);
-        fishResponse.setPrice((BigDecimal) rowData[3]);
-        fishResponse.setStock((Integer) rowData[4]);
-        fishResponse.setAge((String) rowData[5]);
-        fishResponse.setGender((String) rowData[6]);
-        fishResponse.setSize((String) rowData[7]);
-        fishResponse.setFarmName((String) rowData[8]);
-        fishResponse.setViewCount((Integer) rowData[9]);
-        fishResponse.setCategory((String) rowData[10]);
-
-        String imageUrlsString = (String) rowData[11];
-        if (imageUrlsString != null && !imageUrlsString.isEmpty()) {
-            List<String> imageUrls = Arrays.asList(imageUrlsString.split(","));
-            fishResponse.setImageUrls(imageUrls);
-        } else {
-            fishResponse.setImageUrls(Collections.emptyList());
-        }
-
-        //set code for fish
-        if (fishId < 1000) {
-            fishResponse.setCode(String.format("#%03d", fishId));
-        } else {
-            fishResponse.setCode("#" + fishId);
-        }
-
-        return fishResponse;
-    }
-
+    @Transactional
     public Integer createFish(FishCreationRequest request) {
 
         //create product
@@ -115,10 +78,26 @@ public class FishService {
         koiFish.setGender(request.getGender());
         koiFish.setSize(request.getSize());
         koiFish.setFarmName(request.getFarmName());
-        koiFish.setImageUrls( String.join("," ,request.getImageUrls()) );
+        koiFish.setIsDeleted(false);
         koiFish.setViewCount(0);
         fishRepository.save(koiFish);
 
+        //set images
+        for (FishImagesCreationRequest fishImagesCreationRequest : request.getImageUrls()){
+            KoiFishImageUrl fishImage = new KoiFishImageUrl();
+            fishImage.setImageUrl(fishImagesCreationRequest.getImageUrl());
+            fishImage.setDisplayOrder(fishImagesCreationRequest.getDisplayOrder());
+            fishImageUrlRepository.save(fishImage);
+        }
+
         return koiFish.getId();
     }
+
+    private void getPrimaryImageForFish(List<FishGetAllResponse> fishGetAllResponseList) {
+        for (FishGetAllResponse fishGetAllResponse : fishGetAllResponseList) {
+            fishGetAllResponse.setImageUrls(
+                    Collections.singletonList(fishImageUrlRepository.getFishPrimaryImageUrls(fishGetAllResponse.getId()))) ;
+        }
+    }
+
 }

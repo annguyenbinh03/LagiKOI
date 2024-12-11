@@ -1,8 +1,11 @@
 package com.lagikoi.be.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -13,18 +16,27 @@ public class KoiPondService {
     @Column(name = "id", nullable = false)
     private Integer id;
 
+    @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
     private com.lagikoi.be.entity.Product product;
 
+    @NotNull
     @Lob
     @Column(name = "image_urls", nullable = false)
     private String imageUrls;
 
+    @Size(max = 50)
+    @NotNull
     @Column(name = "duration_estimate", nullable = false, length = 50)
     private String durationEstimate;
 
+    @NotNull
     @Column(name = "view_count", nullable = false)
     private Integer viewCount;
+
+    @ColumnDefault("0")
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 
 }

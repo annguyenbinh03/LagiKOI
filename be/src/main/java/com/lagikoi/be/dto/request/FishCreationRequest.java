@@ -28,5 +28,5 @@ public class FishCreationRequest {
     @NotNull(message = "Fish category cannot be null!")
     String category;
     @NotNull(message = "Fish images cannot be null")
-    List<String> imageUrls;
+    List<FishImagesCreationRequest> imageUrls;
 }

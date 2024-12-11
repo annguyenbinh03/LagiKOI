@@ -35,6 +35,7 @@ public class FishCategoryService {
         KoiFishCategory fishCategory = new KoiFishCategory();
         fishCategory.setName(request.getName());
         fishCategory.setDescription(request.getDescription());
+        fishCategory.setIsDeleted(false);
         fishCategoryRepository.save(fishCategory);
         return fishCategory.getId();
     }
