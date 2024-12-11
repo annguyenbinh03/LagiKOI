@@ -8,6 +8,8 @@ import com.lagikoi.be.entity.KoiFish;
 import com.lagikoi.be.entity.KoiFishCategory;
 import com.lagikoi.be.entity.KoiFishImageUrl;
 import com.lagikoi.be.entity.Product;
+import com.lagikoi.be.exception.AppException;
+import com.lagikoi.be.exception.ErrorCode;
 import com.lagikoi.be.repository.FishCategoryRepository;
 import com.lagikoi.be.repository.FishImageUrlRepository;
 import com.lagikoi.be.repository.FishRepository;
@@ -33,7 +35,7 @@ public class FishService {
         List<FishGetAllResponse> fishGetAllResponseList = fishRepository.getAllFish();
 
         if (fishGetAllResponseList.isEmpty())
-            throw new RuntimeException("The list is empty");
+            throw new AppException(ErrorCode.FISH_LIST_NOT_FOUND);
 
         getPrimaryImageForFish(fishGetAllResponseList);
 
@@ -44,7 +46,7 @@ public class FishService {
         FishDetailReponse response = fishRepository.getFishInfo(fishId);
 
         if (response == null) {
-            throw new RuntimeException("Fish with ID " + fishId + " not found");
+            throw new AppException(ErrorCode.FISH_NOT_FOUND);
         }
 
         response.setImages(fishImageUrlRepository.getAllFishImageUrls(fishId));
@@ -67,7 +69,7 @@ public class FishService {
         //get category
         KoiFishCategory category = fishCategoryRepository.getKoiFishCategoriesByName(request.getCategory());
         if(category == null) {
-            throw new RuntimeException("Fish Category not found");
+            throw new AppException(ErrorCode.FISH_CATEGORY_NOT_FOUND);
         }
 
         //createFish

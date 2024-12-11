@@ -26,7 +26,7 @@ public class FishController {
     }
 
     @GetMapping("/{fishId}")
-    public ApiResponse<FishDetailReponse> getAllFish(@PathVariable Integer fishId) {
+    public ApiResponse<FishDetailReponse> getAllFish(@PathVariable @Valid Integer fishId) {
         return ApiResponse.<FishDetailReponse>builder()
                 .code(200)
                 .result(fishService.getFishInfo(fishId))
@@ -35,7 +35,7 @@ public class FishController {
 
     //Return id of created fish
     @PostMapping("/create")
-    public ApiResponse<Integer> createFish(@Valid @RequestBody FishCreationRequest request) {
+    public ApiResponse<Integer> createFish(@RequestBody @Valid FishCreationRequest request) {
         return ApiResponse.<Integer>builder()
                 .code(200)
                 .result(fishService.createFish(request))
