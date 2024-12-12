@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Data;
 
 import java.math.BigDecimal;
+import java.time.Instant;
 import java.util.List;
 
 @Data
@@ -19,6 +20,7 @@ public class FishCreationRequest {
     BigDecimal price;
     @Min(value = 0, message = "Stock can not smaller than 0")
     Integer stock;
+    Instant createdAt; //It should be null, mapper will handle it
     @NotNull(message = "Age cannot be null!")
     String age;
     @NotNull(message = "Gener cannot be null!")
