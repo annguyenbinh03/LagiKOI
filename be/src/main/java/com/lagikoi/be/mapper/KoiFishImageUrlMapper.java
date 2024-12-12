@@ -6,11 +6,10 @@ import com.lagikoi.be.entity.KoiFishImageUrl;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
-import java.time.Instant;
-
 @Mapper(componentModel = "spring")
 public interface KoiFishImageUrlMapper {
 
+    @Mapping(target = "id", ignore = true)
     @Mapping(source = "fish", target = "fish")
     @Mapping(source = "request.imageUrl", target = "imageUrl")
     @Mapping(source = "request.displayOrder", target = "displayOrder")
