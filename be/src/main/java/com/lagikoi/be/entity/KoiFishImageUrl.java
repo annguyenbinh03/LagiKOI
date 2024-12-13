@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
@@ -14,8 +13,8 @@ import java.time.Instant;
 @Table(name = "koi_fish_image_urls")
 public class KoiFishImageUrl {
     @Id
-    @Column(name = "id", nullable = false)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Integer id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -30,11 +29,9 @@ public class KoiFishImageUrl {
     @Column(name = "display_order")
     private Integer displayOrder;
 
-    @ColumnDefault("0")
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 
-    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "created_at")
     private Instant createdAt;
 

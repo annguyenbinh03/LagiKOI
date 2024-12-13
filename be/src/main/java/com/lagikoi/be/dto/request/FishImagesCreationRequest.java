@@ -1,13 +1,15 @@
 package com.lagikoi.be.dto.request;
 
-import jakarta.annotation.Nullable;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
+import lombok.AccessLevel;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
 
 import java.time.Instant;
 
 @Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class FishImagesCreationRequest {
     @NotNull
     String imageUrl;

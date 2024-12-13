@@ -16,7 +16,6 @@ import java.time.Instant;
 public class Product {
     @Id
     @Column(name = "id", nullable = false)
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
     @Size(max = 255)

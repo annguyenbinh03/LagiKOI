@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 @Getter
 @Setter
@@ -19,7 +18,7 @@ public class KoiPondService {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
-    private com.lagikoi.be.entity.Product product;
+    private Product product;
 
     @NotNull
     @Lob
@@ -35,7 +34,6 @@ public class KoiPondService {
     @Column(name = "view_count", nullable = false)
     private Integer viewCount;
 
-    @ColumnDefault("0")
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 

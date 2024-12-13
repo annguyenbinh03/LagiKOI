@@ -11,8 +11,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "role")
-public class Role {
+@Table(name = "permission")
+public class Permission {
     @Id
     @Size(max = 50)
     @Column(name = "name", nullable = false, length = 50)

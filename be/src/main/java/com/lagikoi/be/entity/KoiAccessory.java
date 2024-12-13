@@ -12,18 +12,19 @@ import lombok.Setter;
 @Table(name = "koi_accessories")
 public class KoiAccessory {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "product_id", nullable = false)
-    private com.lagikoi.be.entity.Product product;
+    private Product product;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
-    private com.lagikoi.be.entity.KoiAccessoriesCategory category;
+    private KoiAccessoriesCategory category;
 
     @NotNull
     @Lob

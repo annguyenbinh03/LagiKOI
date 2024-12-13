@@ -2,31 +2,43 @@ CREATE DATABASE IF NOT EXISTS lagikoi;
 
 USE lagikoi;
 
-CREATE TABLE roles (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    role_name VARCHAR(50) NOT NULL UNIQUE,
-    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
+CREATE TABLE role (
+    name VARCHAR(50) NOT NULL PRIMARY KEY,
+    description VARCHAR(255)
+);
+
+CREATE TABLE permission (
+    name VARCHAR(50) NOT NULL PRIMARY KEY,
+    description VARCHAR(255)
 );
 
 CREATE TABLE user (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id VARCHAR(36) NOT NULL PRIMARY KEY,
     username VARCHAR(50) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    email VARCHAR(255),
-    full_name VARCHAR(255),
+    email VARCHAR(255) UNIQUE,
+    first_name VARCHAR(30),
+    last_name VARCHAR(30),
     phone_number VARCHAR(15),
-    created_at DATETIME,
+    dob TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     is_deleted BOOLEAN NOT NULL DEFAULT FALSE
 );
 
 CREATE TABLE user_roles (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    user_id INT NOT NULL,
-    role_id INT NOT NULL,
-    is_deleted BOOLEAN DEFAULT FALSE,    
+    user_id VARCHAR(36) NOT NULL,
+    role_name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (user_id, role_name),
     FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (role_id) REFERENCES roles(id)
+    FOREIGN KEY (role_name) REFERENCES role(name)
+);
+
+CREATE TABLE role_permissions (
+    role_name VARCHAR(50) NOT NULL,
+    permission_name VARCHAR(50) NOT NULL,
+    PRIMARY KEY (role_name, permission_name),
+    FOREIGN KEY (role_name) REFERENCES role(name),
+    FOREIGN KEY (permission_name) REFERENCES permission(name)
 );
 
 CREATE TABLE products (
@@ -40,7 +52,7 @@ CREATE TABLE products (
 
 CREATE TABLE orders (
     id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    customer_id INT NOT NULL,
+    customer_id VARCHAR(36) NOT NULL,
     total_price DECIMAL(10, 2) NOT NULL,
     status ENUM('pending', 'completed', 'cancelled') NOT NULL,
     created_at DATETIME NOT NULL,
@@ -63,7 +75,7 @@ CREATE TABLE blogs (
     content TEXT NOT NULL,
     image_url TEXT NOT NULL,
     created_at DATETIME NOT NULL,
-    author INT NOT NULL,
+    author VARCHAR(36) NOT NULL,
     is_deleted BOOLEAN DEFAULT FALSE,    
     FOREIGN KEY (author) REFERENCES user(id)
 );

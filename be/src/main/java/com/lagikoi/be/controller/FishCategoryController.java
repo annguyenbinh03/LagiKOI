@@ -19,7 +19,6 @@ public class FishCategoryController {
     @GetMapping("/get-all")
     public ApiResponse<List<FishCategoryResponse>> getAllFishCategories() {
         return ApiResponse.<List<FishCategoryResponse>>builder()
-                .code(200)
                 .result(fishCategoryService.getAllFishCategory())
                 .build();
     }
@@ -27,7 +26,6 @@ public class FishCategoryController {
     @PostMapping("/create")
     public ApiResponse<Integer> createFishCategory(@Valid @RequestBody FishCategoryCreationRequest request){
         return ApiResponse.<Integer>builder()
-                .code(200)
                 .result(fishCategoryService.createFishCategory(request))
                 .build();
     }

@@ -20,7 +20,7 @@ public class Order {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "customer_id", nullable = false)
-    private com.lagikoi.be.entity.User customer;
+    private User customer;
 
     @NotNull
     @Column(name = "total_price", nullable = false, precision = 10, scale = 2)

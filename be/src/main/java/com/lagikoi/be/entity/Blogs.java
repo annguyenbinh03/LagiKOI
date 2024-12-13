@@ -5,7 +5,6 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
-import org.hibernate.annotations.ColumnDefault;
 
 import java.time.Instant;
 
@@ -15,6 +14,7 @@ import java.time.Instant;
 @Table(name = "blogs")
 public class Blogs {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
@@ -40,9 +40,8 @@ public class Blogs {
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "author", nullable = false)
-    private com.lagikoi.be.entity.User author;
+    private User author;
 
-    @ColumnDefault("0")
     @Column(name = "is_deleted")
     private Boolean isDeleted;
 

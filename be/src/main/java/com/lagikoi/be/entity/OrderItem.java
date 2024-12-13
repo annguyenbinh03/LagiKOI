@@ -13,13 +13,14 @@ import java.math.BigDecimal;
 @Table(name = "order_items")
 public class OrderItem {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "order_id", nullable = false)
-    private com.lagikoi.be.entity.Order order;
+    private Order order;
 
     @NotNull
     @Column(name = "product_id", nullable = false)

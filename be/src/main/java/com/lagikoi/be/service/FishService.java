@@ -69,9 +69,8 @@ public class FishService {
         productRepository.save(product);
 
         //get category
-        KoiFishCategory category = fishCategoryRepository.getKoiFishCategoriesByName(request.getCategory());
-        if(category == null)
-            throw new AppException(ErrorCode.FISH_CATEGORY_NOT_FOUND);
+        KoiFishCategory category = fishCategoryRepository.getKoiFishCategoriesByName(request.getCategory())
+                .orElseThrow(() -> new AppException(ErrorCode.FISH_CATEGORY_NOT_FOUND));
 
         //createFish
         KoiFish koiFish = fishMapper.prepareKoiFishForSave(request, category, product);
