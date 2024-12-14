@@ -8,6 +8,7 @@ import com.lagikoi.be.entity.User;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
 import com.lagikoi.be.repository.UserRepository;
+import com.lagikoi.be.repository.UserRoleRepository;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -22,11 +23,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.List;
+import java.util.StringJoiner;
 
 @Slf4j
 @Service
@@ -34,6 +38,7 @@ import java.util.Date;
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AuthenticationService {
     UserRepository userRepository;
+    UserRoleRepository userRoleRepository;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -56,16 +61,18 @@ public class AuthenticationService {
     }
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
-        User username = userRepository.findByUsername(request.getUsername())
+        User user = userRepository.findByUsername(request.getUsername())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
 
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
-        boolean authenticated = passwordEncoder.matches(request.getPassword(), username.getPassword());
+        boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
 
         if (!authenticated)
             throw new AppException(ErrorCode.UNAUTHENTICATED);
 
-        String token = generateToken(request.getUsername());
+        List<String> roleNames = userRoleRepository.findRoleNamesByUserId(user.getId());
+
+        String token = generateToken(user, roleNames);
 
         return AuthenticationResponse.builder()
                 .token(token)
@@ -73,15 +80,16 @@ public class AuthenticationService {
                 .build();
     }
 
-    private String generateToken(String username) {
+    private String generateToken(User user,List<String> roleNames) {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
-                .subject(username)
+                .subject(user.getUsername())
                 .issuer("lagikoi")
                 .issueTime(new Date())
                 .expirationTime(new Date(
                         Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
                 ))
+                .claim("scope", buildScope(roleNames))
                 .build();
         Payload payload = new Payload(claimsSet.toJSONObject());
 
@@ -94,5 +102,13 @@ public class AuthenticationService {
             log.error("Cannot create token:", e);
             throw new AppException(ErrorCode.TOKEN_CREATION);
         }
+    }
+
+    private String buildScope(List<String> roleNames) {
+        StringJoiner stringJoiner = new StringJoiner(" "); //convention for scope in oath2
+        if(!CollectionUtils.isEmpty(roleNames)){
+            roleNames.forEach(stringJoiner::add);
+        }
+        return stringJoiner.toString();
     }
 }

@@ -162,4 +162,8 @@ INSERT INTO koi_fish_image_urls (fish_id, image_url, display_order, is_deleted, 
 (2, 'https://example.com/images/koi_fish_b_3.jpg', 3, FALSE, NOW()),
 (3, 'https://example.com/images/koi_fish_c_1.jpg', 1, FALSE, NOW());
 
+INSERT INTO role (name, description) VALUES
+('USER', 'user description'),
+('ADMIN', "admin description"),
+('MANAGER', 'manager description');
 

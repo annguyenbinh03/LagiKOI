@@ -8,12 +8,14 @@ import lombok.experimental.FieldDefaults;
 public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(900, "Uncategorized Exception"),
     INVALID_KEY_EXCEPTION(901, "Invalid message Key"),
+    ROLE_NOT_FOUND(902, "Role not found"),
 
     UNAUTHENTICATED(950, "Unauthenticated"),
     TOKEN_CREATION(951, "Failed to create token due to signing error"),
 
     USER_EXISTED(1001, "User is existed"),
     USER_NOT_EXISTED(1002, "User not existed"),
+    USER_LIST_EMPTY(1003, "User list is empty"),
 
     FISH_EXISTED(1101, "Fish is existed"),
     FISH_CREATION_NAME_SIZE(1102, "Fish name cannot be larger than 255 characters"),

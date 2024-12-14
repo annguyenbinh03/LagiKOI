@@ -2,36 +2,81 @@ package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.UserCreationRequest;
 import com.lagikoi.be.dto.response.UserResponse;
+import com.lagikoi.be.entity.Role;
 import com.lagikoi.be.entity.User;
+import com.lagikoi.be.entity.UserRole;
+import com.lagikoi.be.entity.UserRoleId;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
 import com.lagikoi.be.mapper.UserMapper;
+import com.lagikoi.be.repository.RoleRepository;
 import com.lagikoi.be.repository.UserRepository;
+import com.lagikoi.be.repository.UserRoleRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class UserService {
     UserRepository userRepository;
+    UserRoleRepository userRoleRepository;
+    RoleRepository roleRepository;
 
     UserMapper userMapper;
+    PasswordEncoder passwordEncoder;
 
     public UserResponse createUser(UserCreationRequest request) {
         if (userRepository.existsByUsername((request.getUsername())))
             throw new AppException(ErrorCode.USER_EXISTED);
 
         User user = userMapper.prepareUserForSave(request);
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder(10);
         user.setPassword(passwordEncoder.encode(request.getPassword()));
+        userRepository.save(user);
 
-        return userMapper.toUserResponse(userRepository.save(user));
+        generateRoleForUser(user, userRoleRepository);
+
+        return userMapper.toUserResponse(user);
     }
 
+    public UserResponse getUserInfo(String username) {
+        User user = userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
+        UserResponse userResponse = userMapper.toUserResponse(user);
+        userResponse.setRoles(userRoleRepository.findRoleNamesByUserId(user.getId()));
+        return userResponse;
+    }
 
+    public List<UserResponse> getAllUserInfo() {
+        List<User> users = userRepository.findAll();
+        if (users.isEmpty())
+            throw new AppException(ErrorCode.USER_LIST_EMPTY);
+        List<UserResponse> userResponses = new ArrayList<>();
+        for (User user : users) {
+            UserResponse userResponse = userMapper.toUserResponse(user);
+            userResponse.setRoles(userRoleRepository.findRoleNamesByUserId(user.getId()));
+            userResponses.add(userResponse);
+        }
+        return userResponses;
+    }
+
+    private void generateRoleForUser(User user, UserRoleRepository userRoleRepository) {
+        Role roleUser = roleRepository.findRoleByName("USER");
+        if(roleUser != null) {
+            UserRole userRole = new UserRole();
+            UserRoleId userRoleId = new UserRoleId();
+            userRoleId.setUserId(user.getId());
+            userRoleId.setRoleName(roleUser.getName());
+            userRole.setId(userRoleId);
+            userRole.setUser(user);
+            userRole.setRoleName(roleUser);
+            userRoleRepository.save(userRole);
+        }else
+            throw new AppException(ErrorCode.ROLE_NOT_FOUND);
+    }
 }

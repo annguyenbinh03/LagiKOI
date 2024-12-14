@@ -1,17 +1,26 @@
 package com.lagikoi.be.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Data;
+import lombok.experimental.FieldDefaults;
+
 import java.time.Instant;
+import java.util.List;
 
 @Data
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@FieldDefaults(level = AccessLevel.PRIVATE)
 public class UserResponse {
-    private String id;
-    private String username;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String phoneNumber;
-    private Instant dob;
+    String id;
+    String username;
+    String email;
+    String firstName;
+    String lastName;
+    String phoneNumber;
+    Instant dob;
+    String gender;
+    List<String> roles;
 }
