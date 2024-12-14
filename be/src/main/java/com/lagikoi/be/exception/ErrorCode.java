@@ -9,6 +9,9 @@ public enum ErrorCode {
     UNCATEGORIZED_EXCEPTION(900, "Uncategorized Exception"),
     INVALID_KEY_EXCEPTION(901, "Invalid message Key"),
 
+    UNAUTHENTICATED(950, "Unauthenticated"),
+    TOKEN_CREATION(951, "Failed to create token due to signing error"),
+
     USER_EXISTED(1001, "User is existed"),
     USER_NOT_EXISTED(1002, "User not existed"),
 
