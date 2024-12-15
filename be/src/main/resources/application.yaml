@@ -9,3 +9,7 @@ spring:
       password: ${DBMS_PASSWORD:root}
 jwt:
   signerKey: ${SIGNER_KEY:4/Wrj3qrBDmLcpEfv87WAt3K5EyQ1fpRC1hndgyOiLo/3ak/oTziyJzrEA2DDP1d}
+api:
+  version: v1
+  server:
+    url: http://localhost:8080/lagikoi

@@ -6,7 +6,9 @@ import com.lagikoi.be.dto.response.FishDetailReponse;
 import com.lagikoi.be.dto.response.FishGetAllResponse;
 import com.lagikoi.be.service.FishService;
 import jakarta.validation.Valid;
+import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import lombok.experimental.FieldDefaults;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,8 +16,9 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/fish")
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class FishController {
-    private final FishService fishService;
+    FishService fishService;
 
     @GetMapping("/get-all")
     public ApiResponse<List<FishGetAllResponse>> getAllFish() {
