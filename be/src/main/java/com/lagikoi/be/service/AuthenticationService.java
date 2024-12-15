@@ -87,7 +87,7 @@ public class AuthenticationService {
                 .issuer("lagikoi")
                 .issueTime(new Date())
                 .expirationTime(new Date(
-                        Instant.now().plus(1, ChronoUnit.HOURS).toEpochMilli()
+                        Instant.now().plus(5, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .claim("scope", buildScope(roleNames))
                 .build();

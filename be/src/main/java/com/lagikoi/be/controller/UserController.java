@@ -26,10 +26,17 @@ public class UserController {
                 .build();
     }
 
-    @GetMapping("/info/{username}")
-    public ApiResponse<UserResponse> getUserInfo(@PathVariable("username") String username) {
+    @GetMapping("/info/my-info")
+    public ApiResponse<UserResponse> getUserInfo() {
         return ApiResponse.<UserResponse>builder()
-                .result(userService.getUserInfo(username))
+                .result(userService.getMyInfo())
+                .build();
+    }
+
+    @GetMapping("/info/{userId}")
+    public ApiResponse<UserResponse> getUserInfo(@PathVariable("userId") String userId) {
+        return ApiResponse.<UserResponse>builder()
+                .result(userService.getUserInfo(userId))
                 .build();
     }
 
