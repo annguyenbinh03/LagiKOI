@@ -3,6 +3,7 @@ package com.lagikoi.be.exception;
 import com.lagikoi.be.dto.response.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,7 +25,18 @@ public class GlobalHandlerException {
     @ExceptionHandler(value = AppException.class)
     ResponseEntity<ApiResponse> handleAppException(AppException exception) {
         ErrorCode errorCode = exception.getErrorCode();
-        return ResponseEntity.badRequest().body(
+        return ResponseEntity.status(errorCode.getStatusCode()).body(
+                ApiResponse.builder()
+                        .code(errorCode.getCode())
+                        .message(errorCode.getMessage())
+                        .build()
+        );
+    }
+
+    @ExceptionHandler(value = AccessDeniedException.class)
+    ResponseEntity<ApiResponse> handleAccessDeniedException(AccessDeniedException exception) {
+        ErrorCode errorCode = ErrorCode.UNAUTHORIZED;
+        return ResponseEntity.status(errorCode.getStatusCode()).body(
                 ApiResponse.builder()
                         .code(errorCode.getCode())
                         .message(errorCode.getMessage())
@@ -36,9 +48,9 @@ public class GlobalHandlerException {
     ResponseEntity<ApiResponse> handleValidation(MethodArgumentNotValidException exception) {
 
         ErrorCode errorCode = ErrorCode.INVALID_KEY_EXCEPTION;
-        String errorCodekey = exception.getFieldError().getDefaultMessage();
+        String errorCodeKey = exception.getFieldError().getDefaultMessage();
         try {
-            errorCode = ErrorCode.valueOf(errorCodekey);
+            errorCode = ErrorCode.valueOf(errorCodeKey);
         }catch (IllegalArgumentException e) {
             log.error(exception.getMessage());
         }
@@ -50,7 +62,4 @@ public class GlobalHandlerException {
                         .build()
         );
     }
-
-
-
 }
