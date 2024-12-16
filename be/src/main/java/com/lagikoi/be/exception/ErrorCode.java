@@ -17,6 +17,8 @@ public enum ErrorCode {
     UNAUTHENTICATED(950, "Unauthenticated", HttpStatus.UNAUTHORIZED),
     UNAUTHORIZED(951, "You do not have permission", HttpStatus.FORBIDDEN),
     TOKEN_CREATION(952, "Failed to create token due to signing error", HttpStatus.INTERNAL_SERVER_ERROR),
+    PERMISSION_EXISTED(953, "Permission is existed", HttpStatus.BAD_REQUEST),
+    ROLE_EXISTED(954, "Role is existed", HttpStatus.BAD_REQUEST),
 
     USER_EXISTED(1001, "User is existed", HttpStatus.BAD_REQUEST),
     USER_NOT_EXISTED(1002, "User not existed", HttpStatus.NOT_FOUND),

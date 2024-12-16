@@ -5,6 +5,7 @@ import com.lagikoi.be.dto.response.FishCategoryResponse;
 import com.lagikoi.be.entity.KoiFishCategory;
 import com.lagikoi.be.repository.FishCategoryRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import java.util.List;
 public class FishCategoryService {
     private final FishCategoryRepository fishCategoryRepository;
 
+    @PreAuthorize("hasAuthority('GET_FISH_CATEGORIES')")
     public List<FishCategoryResponse> getAllFishCategory(){
         List<KoiFishCategory> fishCategorys = fishCategoryRepository.findAll();
         if(fishCategorys == null || fishCategorys.isEmpty()) {
@@ -31,6 +33,7 @@ public class FishCategoryService {
         return fishCategoryResponses;
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     public Integer createFishCategory(FishCategoryCreationRequest request) {
         KoiFishCategory fishCategory = new KoiFishCategory();
         fishCategory.setName(request.getName());

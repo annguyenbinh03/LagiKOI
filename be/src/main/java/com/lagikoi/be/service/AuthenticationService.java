@@ -7,6 +7,7 @@ import com.lagikoi.be.dto.response.IntrospectResponse;
 import com.lagikoi.be.entity.User;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
+import com.lagikoi.be.repository.RolePermissionRepository;
 import com.lagikoi.be.repository.UserRepository;
 import com.lagikoi.be.repository.UserRoleRepository;
 import com.nimbusds.jose.*;
@@ -30,6 +31,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 import java.util.StringJoiner;
 
 @Slf4j
@@ -39,6 +41,7 @@ import java.util.StringJoiner;
 public class AuthenticationService {
     UserRepository userRepository;
     UserRoleRepository userRoleRepository;
+    RolePermissionRepository rolePermissionRepository;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -107,7 +110,13 @@ public class AuthenticationService {
     private String buildScope(List<String> roleNames) {
         StringJoiner stringJoiner = new StringJoiner(" "); //convention for scope in oath2
         if(!CollectionUtils.isEmpty(roleNames)){
-            roleNames.forEach(stringJoiner::add);
+            roleNames.forEach(roleName -> {
+                stringJoiner.add("ROLE_" + roleName);
+                Set<String> permission = rolePermissionRepository.findPermissionsByRoleId(roleName);
+                if(!CollectionUtils.isEmpty(permission)){
+                    permission.forEach(stringJoiner::add);
+                }
+            });
         }
         return stringJoiner.toString();
     }

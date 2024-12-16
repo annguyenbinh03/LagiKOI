@@ -1,6 +1,7 @@
 package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.UserCreationRequest;
+import com.lagikoi.be.dto.response.RoleResponse;
 import com.lagikoi.be.dto.response.UserResponse;
 import com.lagikoi.be.entity.Role;
 import com.lagikoi.be.entity.User;
@@ -9,9 +10,7 @@ import com.lagikoi.be.entity.UserRoleId;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
 import com.lagikoi.be.mapper.UserMapper;
-import com.lagikoi.be.repository.RoleRepository;
-import com.lagikoi.be.repository.UserRepository;
-import com.lagikoi.be.repository.UserRoleRepository;
+import com.lagikoi.be.repository.*;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -25,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -34,6 +34,7 @@ public class UserService {
     UserRepository userRepository;
     UserRoleRepository userRoleRepository;
     RoleRepository roleRepository;
+    RolePermissionRepository rolePermissionRepository;
 
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
@@ -56,7 +57,7 @@ public class UserService {
     public UserResponse getUserInfo(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         UserResponse userResponse = userMapper.toUserResponse(user);
-        userResponse.setRoles(userRoleRepository.findRoleNamesByUserId(user.getId()));
+        userResponse.setRoles(getRoleResponseByUserId(user.getId()));
         return userResponse;
     }
 
@@ -64,7 +65,7 @@ public class UserService {
         String username = SecurityContextHolder.getContext().getAuthentication().getName();
         User user = userRepository.findByUsername(username).orElseThrow(() -> new AppException(ErrorCode.USER_NOT_EXISTED));
         UserResponse userResponse = userMapper.toUserResponse(user);
-        userResponse.setRoles(userRoleRepository.findRoleNamesByUserId(user.getId()));
+        userResponse.setRoles(getRoleResponseByUserId(user.getId()));
         return userResponse;
     }
 
@@ -76,10 +77,21 @@ public class UserService {
         List<UserResponse> userResponses = new ArrayList<>();
         for (User user : users) {
             UserResponse userResponse = userMapper.toUserResponse(user);
-            userResponse.setRoles(userRoleRepository.findRoleNamesByUserId(user.getId()));
+            userResponse.setRoles(getRoleResponseByUserId(user.getId()));
             userResponses.add(userResponse);
         }
         return userResponses;
+    }
+
+    private List<RoleResponse> getRoleResponseByUserId(String userId) {
+        List<Role> roles = roleRepository.findAllRoleByUserId(userId);
+        List<RoleResponse> roleResponseList = new ArrayList<>();
+        for (Role role : roles) {
+            Set<String> permissions = rolePermissionRepository.findPermissionsByRoleId(role.getName());
+            RoleResponse roleResponse = new RoleResponse(role.getName(), role.getDescription(), permissions);
+            roleResponseList.add(roleResponse);
+        }
+        return roleResponseList;
     }
 
     private void generateRoleForUser(User user, UserRoleRepository userRoleRepository) {

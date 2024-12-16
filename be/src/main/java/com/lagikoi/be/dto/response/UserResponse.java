@@ -22,5 +22,5 @@ public class UserResponse {
     String phoneNumber;
     Instant dob;
     String gender;
-    List<String> roles;
+    List<RoleResponse> roles;
 }
