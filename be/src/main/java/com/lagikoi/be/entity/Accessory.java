@@ -9,48 +9,35 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "koi_fish")
-public class KoiFish {
+@Table(name = "accessory")
+public class Accessory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
     @NotNull
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "category_id", nullable = false)
-    private KoiFishCategory category;
+    private AccessoryCategory category;
 
-    @Size(max = 15)
     @NotNull
-    @Column(name = "age", nullable = false, length = 15)
-    private String age;
-
-    @Size(max = 10)
-    @NotNull
-    @Column(name = "gender", nullable = false, length = 10)
-    private String gender;
+    @Lob
+    @Column(name = "image_urls", nullable = false)
+    private String imageUrls;
 
     @Size(max = 50)
     @NotNull
-    @Column(name = "size", nullable = false, length = 50)
-    private String size;
-
-    @Size(max = 255)
-    @NotNull
-    @Column(name = "farm_name", nullable = false)
-    private String farmName;
+    @Column(name = "brand", nullable = false, length = 50)
+    private String brand;
 
     @NotNull
     @Column(name = "view_count", nullable = false)
     private Integer viewCount;
-
-    @Column(name = "is_deleted")
-    private Boolean isDeleted;
 
 }

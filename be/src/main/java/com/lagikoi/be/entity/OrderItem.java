@@ -1,5 +1,6 @@
 package com.lagikoi.be.entity;
 
+import com.lagikoi.be.enums.ProductType;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -10,7 +11,7 @@ import java.math.BigDecimal;
 @Getter
 @Setter
 @Entity
-@Table(name = "order_items")
+@Table(name = "order_item")
 public class OrderItem {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -29,7 +30,8 @@ public class OrderItem {
     @NotNull
     @Lob
     @Column(name = "product_type", nullable = false)
-    private String productType;
+    @Enumerated(EnumType.ORDINAL)
+    private ProductType productType;
 
     @NotNull
     @Column(name = "quantity", nullable = false)

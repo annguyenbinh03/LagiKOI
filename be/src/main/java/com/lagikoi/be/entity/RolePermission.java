@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "role_permissions")
+@Table(name = "role_permission")
 public class RolePermission {
     @EmbeddedId
     private RolePermissionId id;

@@ -9,21 +9,16 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "koi_pond_services")
-public class KoiPondService {
+@Table(name = "service")
+public class Service {
     @Id
     @Column(name = "id", nullable = false)
     private Integer id;
 
     @NotNull
-    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
-
-    @NotNull
-    @Lob
-    @Column(name = "image_urls", nullable = false)
-    private String imageUrls;
 
     @Size(max = 50)
     @NotNull

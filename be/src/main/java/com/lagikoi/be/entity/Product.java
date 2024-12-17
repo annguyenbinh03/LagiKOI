@@ -8,20 +8,35 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.time.Instant;
+import java.util.List;
 
 @Getter
 @Setter
 @Entity
-@Table(name = "products")
+@Table(name = "product")
 public class Product {
     @Id
+    @Size(max = 36)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private String id;
 
     @Size(max = 255)
     @NotNull
     @Column(name = "name", nullable = false)
     private String name;
+
+    @OneToMany(mappedBy = "product", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<ProductImage> productImages;
+
+    @OneToOne(mappedBy = "product")
+    private Fish fish;
+
+    @OneToOne(mappedBy = "product")
+    private Accessory koiAccessory;
+
+    @OneToOne(mappedBy = "product")
+    private Service service;
 
     @Lob
     @Column(name = "description")
@@ -38,5 +53,4 @@ public class Product {
     @NotNull
     @Column(name = "created_at", nullable = false)
     private Instant createdAt;
-
 }

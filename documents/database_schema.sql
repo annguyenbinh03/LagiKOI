@@ -1,169 +1,51 @@
-CREATE DATABASE IF NOT EXISTS lagikoi;
-
 USE lagikoi;
 
-CREATE TABLE role (
-    name VARCHAR(50) NOT NULL PRIMARY KEY,
-    description VARCHAR(255)
-);
+INSERT INTO product ( id, name, description, price, stock, created_at) VALUES
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'Koi Fish A', 'A beautiful red and white koi fish', 100.00, 10, NOW()),
+('f8946ef4-2a93-4824-9d98-34b562655268', 'Koi Fish B', 'A stunning yellow koi fish', 150.00, 15, NOW()),
+('e9375127-0bb0-47bc-a99c-e1d75065c157','Koi Fish C', 'A rare black koi fish with orange spots', 200.00, 20, NOW());
 
-CREATE TABLE permission (
-    name VARCHAR(50) NOT NULL PRIMARY KEY,
-    description VARCHAR(255)
-);
-
-CREATE TABLE user (
-    id VARCHAR(36) NOT NULL PRIMARY KEY,
-    username VARCHAR(50) NOT NULL UNIQUE,
-    password VARCHAR(255) NOT NULL,
-    email VARCHAR(255) UNIQUE,
-    first_name VARCHAR(30),
-    last_name VARCHAR(30),
-    phone_number VARCHAR(15),
-    dob TIMESTAMP,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    is_deleted BOOLEAN NOT NULL DEFAULT FALSE
-);
-
-CREATE TABLE user_roles (
-    user_id VARCHAR(36) NOT NULL,
-    role_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (user_id, role_name),
-    FOREIGN KEY (user_id) REFERENCES user(id),
-    FOREIGN KEY (role_name) REFERENCES role(name)
-);
-
-CREATE TABLE role_permissions (
-    role_name VARCHAR(50) NOT NULL,
-    permission_name VARCHAR(50) NOT NULL,
-    PRIMARY KEY (role_name, permission_name),
-    FOREIGN KEY (role_name) REFERENCES role(name),
-    FOREIGN KEY (permission_name) REFERENCES permission(name)
-);
-
-CREATE TABLE products (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    price DECIMAL(10, 2) NOT NULL,
-    stock INT NOT NULL,
-    created_at DATETIME NOT NULL
-);
-
-CREATE TABLE orders (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    customer_id VARCHAR(36) NOT NULL,
-    total_price DECIMAL(10, 2) NOT NULL,
-    status ENUM('pending', 'completed', 'cancelled') NOT NULL,
-    created_at DATETIME NOT NULL,
-    FOREIGN KEY (customer_id) REFERENCES user(id)
-);
-
-CREATE TABLE order_items (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    order_id INT NOT NULL,
-    product_id INT NOT NULL,
-    product_type ENUM('fish', 'accessories', 'services') NOT NULL,
-    quantity INT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(id)
-);
-
-CREATE TABLE blogs (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    title NVARCHAR(255) NOT NULL,
-    content TEXT NOT NULL,
-    image_url TEXT NOT NULL,
-    created_at DATETIME NOT NULL,
-    author VARCHAR(36) NOT NULL,
-    is_deleted BOOLEAN DEFAULT FALSE,    
-    FOREIGN KEY (author) REFERENCES user(id)
-);
-
-CREATE TABLE koi_fish_category (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    is_deleted BOOLEAN DEFAULT FALSE  
-);
-
-CREATE TABLE koi_fish (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    category_id INT NOT NULL,
-    age VARCHAR(15) NOT NULL,
-    gender VARCHAR(10) NOT NULL,
-    size VARCHAR(50) NOT NULL,
-    farm_name VARCHAR(255) NOT NULL,
-    view_count INT NOT NULL,
-    is_deleted BOOLEAN DEFAULT FALSE,    
-    FOREIGN KEY (product_id) REFERENCES products(id),
-    FOREIGN KEY (category_id) REFERENCES koi_fish_category(id)
-);
-
-CREATE TABLE koi_fish_image_urls (
-	id INT AUTO_INCREMENT PRIMARY KEY,
-    fish_id INT,
-    image_url TEXT NOT NULL,
-    display_order INT,
-    is_deleted BOOLEAN DEFAULT FALSE,    
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (fish_id) REFERENCES koi_fish(id) 
-);
-
-CREATE TABLE koi_accessories_category (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    is_deleted BOOLEAN DEFAULT FALSE
-);
-
-CREATE TABLE koi_accessories (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    category_id INT NOT NULL,
-    image_urls TEXT NOT NULL,
-    brand VARCHAR(50) NOT NULL,
-    view_count INT NOT NULL,
-    FOREIGN KEY (product_id) REFERENCES products(id),
-    FOREIGN KEY (category_id) REFERENCES koi_accessories_category(id)
-);
-
-CREATE TABLE koi_pond_services (
-    id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
-    product_id INT NOT NULL,
-    image_urls TEXT NOT NULL,
-    duration_estimate VARCHAR(50) NOT NULL,
-    view_count INT NOT NULL,
-    is_deleted BOOLEAN DEFAULT FALSE,    
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
-
-INSERT INTO products (name, description, price, stock, created_at) VALUES
-('Koi Fish A', 'A beautiful red and white koi fish', 100.00, 10, NOW()),
-('Koi Fish B', 'A stunning yellow koi fish', 150.00, 15, NOW()),
-('Koi Fish C', 'A rare black koi fish with orange spots', 200.00, 20, NOW());
-
-INSERT INTO koi_fish_category (name, description) VALUES
+INSERT INTO fish_category (name, description) VALUES
 ('SIRO', 'A category of koi known for their white body color with minimal markings.'),
 ('SHOWA', 'A type of koi with black, red, and white coloring.'),
 ('KOHAKU', 'A classic koi with red and white colors, one of the most popular varieties.');
 
-INSERT INTO koi_fish (product_id, category_id, age, gender, size, farm_name, view_count) VALUES
-(1, 1, '2 years', 'Male', 'Medium', 'Koi Farm A', 100),
-(2, 2, '3 years', 'Female', 'Large', 'Koi Farm B', 150),
-(3, 3, '1 year', 'Male', 'Small', 'Koi Farm C', 200);
+INSERT INTO fish (product_id, category_id, age, gender, size, farm_name, view_count, is_deleted) VALUES
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 1, '2 years', 'Male', 'Medium', 'Koi Farm A', 100, false),
+('f8946ef4-2a93-4824-9d98-34b562655268', 2, '3 years', 'Female', 'Large', 'Koi Farm B', 150, false),
+('e9375127-0bb0-47bc-a99c-e1d75065c157', 3, '1 year', 'Male', 'Small', 'Koi Farm C', 200, false);
 
-INSERT INTO koi_fish_image_urls (fish_id, image_url, display_order, is_deleted, created_at) VALUES
-(1, 'https://example.com/images/koi_fish_a_1.jpg', 1, FALSE, NOW()),
-(1, 'https://example.com/images/koi_fish_a_2.jpg', 2, FALSE, NOW()),
-(2, 'https://example.com/images/koi_fish_b_1.jpg', 1, FALSE, NOW()),
-(2, 'https://example.com/images/koi_fish_b_2.jpg', 2, FALSE, NOW()),
-(2, 'https://example.com/images/koi_fish_b_3.jpg', 3, FALSE, NOW()),
-(3, 'https://example.com/images/koi_fish_c_1.jpg', 1, FALSE, NOW());
+INSERT INTO product_image (product_id, image_url, display_order, is_deleted, created_at) VALUES
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'https://example.com/images/koi_fish_a_1.jpg', 1, FALSE, NOW()),
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'https://example.com/images/koi_fish_a_2.jpg', 2, FALSE, NOW()),
+('f8946ef4-2a93-4824-9d98-34b562655268', 'https://example.com/images/koi_fish_b_1.jpg', 1, FALSE, NOW()),
+('f8946ef4-2a93-4824-9d98-34b562655268', 'https://example.com/images/koi_fish_b_2.jpg', 2, FALSE, NOW()),
+('f8946ef4-2a93-4824-9d98-34b562655268', 'https://example.com/images/koi_fish_b_3.jpg', 3, FALSE, NOW()),
+('e9375127-0bb0-47bc-a99c-e1d75065c157', 'https://example.com/images/koi_fish_c_1.jpg', 1, FALSE, NOW());
 
 INSERT INTO role (name, description) VALUES
 ('USER', 'user description'),
 ('ADMIN', "admin description"),
 ('MANAGER', 'manager description');
+
+INSERT INTO permission (name, description) VALUES
+('CREATE_FISH', 'create fish permission'),
+('GET_USERS', 'get all user permission'),
+('GET_FISH_CATEGORIES', 'get all fish categories');
+
+INSERT INTO role_permission (role_name, permission_name) VALUES
+('ADMIN', 'CREATE_FISH'),
+('ADMIN', 'GET_USERS'),
+('USER', 'GET_FISH_CATEGORIES');
+
+INSERT INTO user (id, username, password, is_deleted) VALUES
+('ab3bcd2e-54e0-4fae-a07e-19d7152e65e5', 'user', '$2b$10$2EkiZ6bovfh.eB0Nw3ONnOCLlupBQxek31WhR1DH8TJKa6Z.DVzXi', false), #user1234
+('06ff0bfd-c2ff-401c-a33c-58a3e0799651', 'admin','$2b$10$ABEROdTJf2asJT8BUvO43uJ6h49vqPHWsN8j5mqKTP0fYi4h7dF6m', false), #admin123
+('95ed93cb-868a-4a05-b8e5-556833209e3b', 'manager', '$2b$10$H32LWplgauc3Q2xOK27ETO1fjhVZ9hl8/WSG/.9KG2bwxsAE/xv6i', false); #manager1
+
+INSERT INTO user_role (role_name, user_id) VALUES
+('USER', 'ab3bcd2e-54e0-4fae-a07e-19d7152e65e5'),
+('ADMIN', '06ff0bfd-c2ff-401c-a33c-58a3e0799651'),
+('MANAGER', '95ed93cb-868a-4a05-b8e5-556833209e3b');
+
 

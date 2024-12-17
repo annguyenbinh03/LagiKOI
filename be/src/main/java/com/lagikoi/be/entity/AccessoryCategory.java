@@ -9,8 +9,8 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-@Table(name = "koi_accessories_category")
-public class KoiAccessoriesCategory {
+@Table(name = "accessory_category")
+public class AccessoryCategory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
