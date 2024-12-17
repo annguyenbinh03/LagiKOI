@@ -1,20 +1,20 @@
 package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.FishCreationRequest;
-import com.lagikoi.be.dto.request.FishImagesCreationRequest;
+import com.lagikoi.be.dto.request.ProductImageCreationRequest;
 import com.lagikoi.be.dto.response.FishDetailReponse;
 import com.lagikoi.be.dto.response.FishGetAllResponse;
-import com.lagikoi.be.entity.KoiFish;
-import com.lagikoi.be.entity.KoiFishCategory;
-import com.lagikoi.be.entity.KoiFishImageUrl;
+import com.lagikoi.be.entity.Fish;
+import com.lagikoi.be.entity.FishCategory;
 import com.lagikoi.be.entity.Product;
+import com.lagikoi.be.entity.ProductImage;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
-import com.lagikoi.be.mapper.KoiFishImageUrlMapper;
-import com.lagikoi.be.mapper.KoiFishMapper;
+import com.lagikoi.be.mapper.FishMapper;
+import com.lagikoi.be.mapper.ProductImageMapper;
 import com.lagikoi.be.mapper.ProductMapper;
 import com.lagikoi.be.repository.FishCategoryRepository;
-import com.lagikoi.be.repository.FishImageUrlRepository;
+import com.lagikoi.be.repository.ProductImageRepository;
 import com.lagikoi.be.repository.FishRepository;
 import com.lagikoi.be.repository.ProductRepository;
 import lombok.AccessLevel;
@@ -23,7 +23,6 @@ import lombok.experimental.FieldDefaults;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -33,19 +32,21 @@ public class FishService {
     FishRepository fishRepository;
     ProductRepository productRepository;
     FishCategoryRepository fishCategoryRepository;
-    FishImageUrlRepository fishImageUrlRepository;
+    ProductImageRepository productImageRepository;
 
-    KoiFishMapper fishMapper;
+    FishMapper fishMapper;
     ProductMapper productMapper;
-    KoiFishImageUrlMapper koiFishImageUrlMapper;
+    ProductImageMapper productImageMapper;
 
     public List<FishGetAllResponse> getAllFish() {
         List<FishGetAllResponse> fishGetAllResponseList = fishRepository.getAllFish();
 
+        for (FishGetAllResponse fishGetAllResponse : fishGetAllResponseList) {
+            fishGetAllResponse.setCode(generateCodeForFish(fishGetAllResponse.getId()));
+        }
+
         if (fishGetAllResponseList.isEmpty())
             throw new AppException(ErrorCode.FISH_LIST_NOT_FOUND);
-
-        getPrimaryImageForFish(fishGetAllResponseList);
 
         return fishGetAllResponseList;
     }
@@ -56,7 +57,9 @@ public class FishService {
         if (response == null)
             throw new AppException(ErrorCode.FISH_NOT_FOUND);
 
-        response.setImages(fishImageUrlRepository.getAllFishImageUrls(fishId));
+        response.setCode(generateCodeForFish(fishId));
+
+        response.setImages(productImageRepository.getProductImageByFishId(fishId));
 
         return response;
     }
@@ -69,30 +72,27 @@ public class FishService {
         productRepository.save(product);
 
         //get category
-        KoiFishCategory category = fishCategoryRepository.getKoiFishCategoriesByName(request.getCategory())
+        FishCategory category = fishCategoryRepository.getKoiFishCategoriesByName(request.getCategory())
                 .orElseThrow(() -> new AppException(ErrorCode.FISH_CATEGORY_NOT_FOUND));
 
         //createFish
-        KoiFish koiFish = fishMapper.prepareKoiFishForSave(request, category, product);
-        fishRepository.save(koiFish);
+        Fish fish = fishMapper.prepareKoiFishForSave(request, category, product);
+        fishRepository.save(fish);
 
         //set images
-        saveImagesForFish(request.getImageUrls(), koiFish);
+        saveImagesForFish(request.getImageUrls(), fish);
 
-        return koiFish.getId();
+        return fish.getId();
     }
 
-    private void getPrimaryImageForFish(List<FishGetAllResponse> fishGetAllResponseList) {
-        for (FishGetAllResponse fishGetAllResponse : fishGetAllResponseList) {
-            fishGetAllResponse.setImageUrls(
-                    Collections.singletonList(fishImageUrlRepository.getFishPrimaryImageUrls(fishGetAllResponse.getId()))) ;
-        }
+    public static String generateCodeForFish(int id) {
+        return id < 1000 ? String.format("#%03d", id) : "#" + id;
     }
 
-    private void saveImagesForFish(List<FishImagesCreationRequest> requestFishImages, KoiFish koiFish) {
-        for (FishImagesCreationRequest fishImagesCreationRequest : requestFishImages){
-            KoiFishImageUrl fishImage = koiFishImageUrlMapper.prepareKoiFishImageUrlForSave(fishImagesCreationRequest, koiFish);
-            fishImageUrlRepository.save(fishImage);
+    private void saveImagesForFish(List<ProductImageCreationRequest> requestFishImages, Fish fish) {
+        for (ProductImageCreationRequest fishImagesCreationRequest : requestFishImages) {
+            ProductImage fishImage = productImageMapper.prepareProductImageForSave(fishImagesCreationRequest, fish);
+            productImageRepository.save(fishImage);
         }
     }
 

@@ -31,12 +31,15 @@ INSERT INTO role (name, description) VALUES
 INSERT INTO permission (name, description) VALUES
 ('CREATE_FISH', 'create fish permission'),
 ('GET_USERS', 'get all user permission'),
-('GET_FISH_CATEGORIES', 'get all fish categories');
+('GET_FISH_CATEGORY', 'get all fish categories'),
+('CREATE_FISH_CATEGORY', 'crate fish category permission');
 
 INSERT INTO role_permission (role_name, permission_name) VALUES
 ('ADMIN', 'CREATE_FISH'),
 ('ADMIN', 'GET_USERS'),
-('USER', 'GET_FISH_CATEGORIES');
+('ADMIN', 'CREATE_FISH_CATEGORY'),
+('MANAGER', 'CREATE_FISH_CATEGORY'),
+('USER', 'GET_FISH_CATEGORY');
 
 INSERT INTO user (id, username, password, is_deleted) VALUES
 ('ab3bcd2e-54e0-4fae-a07e-19d7152e65e5', 'user', '$2b$10$2EkiZ6bovfh.eB0Nw3ONnOCLlupBQxek31WhR1DH8TJKa6Z.DVzXi', false), #user1234

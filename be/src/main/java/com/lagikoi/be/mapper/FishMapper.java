@@ -1,14 +1,14 @@
 package com.lagikoi.be.mapper;
 
 import com.lagikoi.be.dto.request.FishCreationRequest;
-import com.lagikoi.be.entity.KoiFish;
-import com.lagikoi.be.entity.KoiFishCategory;
+import com.lagikoi.be.entity.Fish;
+import com.lagikoi.be.entity.FishCategory;
 import com.lagikoi.be.entity.Product;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
-public interface KoiFishMapper {
+public interface FishMapper {
 
     @Mapping(target = "id", ignore = true)
     @Mapping(source = "category", target = "category")
@@ -19,5 +19,5 @@ public interface KoiFishMapper {
     @Mapping(source = "request.farmName", target = "farmName")
     @Mapping(target = "isDeleted", constant = "false")
     @Mapping(target = "viewCount", constant = "0")
-    KoiFish prepareKoiFishForSave(FishCreationRequest request, KoiFishCategory category, Product product);
+    Fish prepareKoiFishForSave(FishCreationRequest request, FishCategory category, Product product);
 }

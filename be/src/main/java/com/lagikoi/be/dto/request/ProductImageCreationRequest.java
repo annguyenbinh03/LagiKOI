@@ -10,7 +10,7 @@ import java.time.Instant;
 
 @Data
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class FishImagesCreationRequest {
+public class ProductImageCreationRequest {
     @NotNull
     String imageUrl;
     @NotNull

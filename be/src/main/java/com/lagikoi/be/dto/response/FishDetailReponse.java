@@ -1,5 +1,6 @@
 package com.lagikoi.be.dto.response;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
@@ -8,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 @Data
+@JsonInclude(JsonInclude.Include.NON_NULL)
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FishDetailReponse {
     Integer id;
@@ -23,7 +25,7 @@ public class FishDetailReponse {
     String farmName;
     Integer viewCount;
     String category;
-    List<FishImageUrlResponse> images;
+    List<ProductImageResponse> images;
 
     public FishDetailReponse(Integer id, String name, String description, BigDecimal price, Integer stock,
                               String age, String gender, String size, String farmName, Integer viewCount,

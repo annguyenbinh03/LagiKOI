@@ -1,13 +1,13 @@
 package com.lagikoi.be.repository;
 
-import com.lagikoi.be.entity.KoiFishCategory;
+import com.lagikoi.be.entity.FishCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface FishCategoryRepository extends JpaRepository<KoiFishCategory, Integer> {
+public interface FishCategoryRepository extends JpaRepository<FishCategory, Integer> {
 
-   Optional<KoiFishCategory> getKoiFishCategoriesByName(String name);
+   Optional<FishCategory> getKoiFishCategoriesByName(String name);
 }

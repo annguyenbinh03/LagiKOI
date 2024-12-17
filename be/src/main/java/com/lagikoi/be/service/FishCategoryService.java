@@ -2,7 +2,9 @@ package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.FishCategoryCreationRequest;
 import com.lagikoi.be.dto.response.FishCategoryResponse;
-import com.lagikoi.be.entity.KoiFishCategory;
+import com.lagikoi.be.entity.FishCategory;
+import com.lagikoi.be.exception.AppException;
+import com.lagikoi.be.exception.ErrorCode;
 import com.lagikoi.be.repository.FishCategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -16,14 +18,12 @@ import java.util.List;
 public class FishCategoryService {
     private final FishCategoryRepository fishCategoryRepository;
 
-    @PreAuthorize("hasAuthority('GET_FISH_CATEGORIES')")
     public List<FishCategoryResponse> getAllFishCategory(){
-        List<KoiFishCategory> fishCategorys = fishCategoryRepository.findAll();
-        if(fishCategorys == null || fishCategorys.isEmpty()) {
-            throw new RuntimeException("Not find any fish category");
-        }
+        List<FishCategory> fishCategories = fishCategoryRepository.findAll();
+        if(fishCategories.isEmpty())
+            throw new AppException(ErrorCode.FISH_CATEGORY_NOT_FOUND);
         List<FishCategoryResponse> fishCategoryResponses = new ArrayList<>();
-        for (KoiFishCategory fishCategory : fishCategorys) {
+        for (FishCategory fishCategory : fishCategories) {
             FishCategoryResponse fishCategoryResponse = new FishCategoryResponse();
             fishCategoryResponse.setId(fishCategory.getId());
             fishCategoryResponse.setName(fishCategory.getName());
@@ -33,9 +33,9 @@ public class FishCategoryService {
         return fishCategoryResponses;
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('CREATE_FISH_CATEGORY')")
     public Integer createFishCategory(FishCategoryCreationRequest request) {
-        KoiFishCategory fishCategory = new KoiFishCategory();
+        FishCategory fishCategory = new FishCategory();
         fishCategory.setName(request.getName());
         fishCategory.setDescription(request.getDescription());
         fishCategory.setIsDeleted(false);

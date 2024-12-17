@@ -28,7 +28,9 @@ public enum ErrorCode {
     FISH_CREATION_NAME_SIZE(1102, "Fish name cannot be larger than 255 characters", HttpStatus.BAD_REQUEST),
     FISH_LIST_NOT_FOUND(1100, "Fish list is empty", HttpStatus.NO_CONTENT),
     FISH_NOT_FOUND(1101, "Not found fish", HttpStatus.BAD_REQUEST),
-    FISH_CATEGORY_NOT_FOUND(1102, "Fish category is empty", HttpStatus.NO_CONTENT)
+    FISH_CATEGORY_NOT_FOUND(1102, "Fish category is empty", HttpStatus.BAD_REQUEST),
+    FISH_CATEGORY_LIST_NOT_FOUND(1103, "Fish category list is empty", HttpStatus.NO_CONTENT),
+
 
     ;
 

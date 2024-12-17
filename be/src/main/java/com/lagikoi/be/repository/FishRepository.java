@@ -2,7 +2,7 @@ package com.lagikoi.be.repository;
 
 import com.lagikoi.be.dto.response.FishDetailReponse;
 import com.lagikoi.be.dto.response.FishGetAllResponse;
-import com.lagikoi.be.entity.KoiFish;
+import com.lagikoi.be.entity.Fish;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -11,22 +11,19 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface FishRepository extends JpaRepository<KoiFish, Integer> {
-    @Query("SELECT new com.lagikoi.be.dto.response.FishGetAllResponse(" +
-            "k.id, p.name, p.description, p.price, p.stock, k.age, k.gender, " +
-            "k.size, k.farmName, k.viewCount, kc.name) " +
-            "FROM Product p " +
-            "JOIN KoiFish k ON p.id = k.product.id " +
-            "JOIN KoiFishCategory kc ON k.category.id = kc.id " +
-            "WHERE k.isDeleted = false")
+public interface FishRepository extends JpaRepository<Fish, Integer> {
+    @Query("SELECT new com.lagikoi.be.dto.response.FishGetAllResponse( f.id, f.product.name, f.product.description, f.product.price, f.product.stock, f.age, f.gender, " +
+            "f.size, f.farmName, f.viewCount, kc.name, pi.imageUrl )" +
+            "FROM Fish f " +
+            "JOIN FishCategory kc ON f.category = kc " +
+            "JOIN ProductImage pi ON f.product = pi.product" +
+            " WHERE f.isDeleted = false AND pi.displayOrder = 1")
     List<FishGetAllResponse> getAllFish();
 
-    @Query("SELECT new com.lagikoi.be.dto.response.FishDetailReponse(" +
-            "k.id, p.name, p.description, p.price, p.stock, k.age, k.gender, " +
-            "k.size, k.farmName, k.viewCount, kc.name) " +
-            "FROM Product p " +
-            "JOIN KoiFish k ON p.id = k.product.id " +
-            "JOIN KoiFishCategory kc ON k.category.id = kc.id " +
-            "WHERE k.id = :fishId AND k.isDeleted = false")
+    @Query("SELECT new com.lagikoi.be.dto.response.FishDetailReponse( f.id, f.product.name, f.product.description, f.product.price, f.product.stock, f.age, f.gender, " +
+            "f.size, f.farmName, f.viewCount, kc.name )" +
+            "FROM Fish f " +
+            "JOIN FishCategory kc ON f.category = kc " +
+            " WHERE f.isDeleted = false AND f.id = :fishId")
     FishDetailReponse getFishInfo(@Param("fishId") Integer fishId);
 }
