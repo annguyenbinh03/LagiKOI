@@ -2,14 +2,14 @@ package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.AuthenticationRequest;
 import com.lagikoi.be.dto.request.IntrospectRequest;
+import com.lagikoi.be.dto.request.LogoutRequest;
 import com.lagikoi.be.dto.response.AuthenticationResponse;
 import com.lagikoi.be.dto.response.IntrospectResponse;
+import com.lagikoi.be.entity.InvalidatedToken;
 import com.lagikoi.be.entity.User;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
-import com.lagikoi.be.repository.RolePermissionRepository;
-import com.lagikoi.be.repository.UserRepository;
-import com.lagikoi.be.repository.UserRoleRepository;
+import com.lagikoi.be.repository.*;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.MACSigner;
 import com.nimbusds.jose.crypto.MACVerifier;
@@ -29,10 +29,7 @@ import org.springframework.util.CollectionUtils;
 import java.text.ParseException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-import java.util.StringJoiner;
+import java.util.*;
 
 @Slf4j
 @Service
@@ -42,6 +39,7 @@ public class AuthenticationService {
     UserRepository userRepository;
     UserRoleRepository userRoleRepository;
     RolePermissionRepository rolePermissionRepository;
+    InvalidatedTokenRepository invalidatedTokenRepository;
 
     @NonFinal
     @Value("${jwt.signerKey}")
@@ -50,16 +48,15 @@ public class AuthenticationService {
     public IntrospectResponse introspect(IntrospectRequest request) throws JOSEException, ParseException {
         String token = request.getToken();
 
-        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
-
-        SignedJWT signedJWT = SignedJWT.parse(token);
-
-        boolean verified = signedJWT.verify(verifier);
-
-        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+        boolean isValid = true;
+        try {
+            verifyToken(token);
+        } catch (Exception e) {
+            isValid = false;
+        }
 
         return IntrospectResponse.builder()
-                .valid( verified && expiryTime.after(new Date()))
+                .valid(isValid)
                 .build();
     }
 
@@ -83,7 +80,35 @@ public class AuthenticationService {
                 .build();
     }
 
-    private String generateToken(User user,List<String> roleNames) {
+    public void logout(LogoutRequest request) throws JOSEException, ParseException {
+        SignedJWT signedJWT = verifyToken(request.getToken());
+
+        String jit = signedJWT.getJWTClaimsSet().getJWTID();
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        InvalidatedToken invalidatedToken = InvalidatedToken.builder().id(jit).expiryTime(expiryTime.toInstant()).build();
+        invalidatedTokenRepository.save(invalidatedToken);
+    }
+
+    private SignedJWT verifyToken(String token) throws JOSEException, ParseException {
+        JWSVerifier verifier = new MACVerifier(SIGNER_KEY.getBytes());
+
+        SignedJWT signedJWT = SignedJWT.parse(token);
+
+        boolean verified = signedJWT.verify(verifier);
+
+        Date expiryTime = signedJWT.getJWTClaimsSet().getExpirationTime();
+
+        if (!verified && expiryTime.after(new Date()))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+
+        if (invalidatedTokenRepository.existsById(signedJWT.getJWTClaimsSet().getJWTID()))
+            throw new AppException(ErrorCode.UNAUTHENTICATED);
+
+        return signedJWT;
+    }
+
+    private String generateToken(User user, List<String> roleNames) {
         JWSHeader jwsHeader = new JWSHeader(JWSAlgorithm.HS512);
         JWTClaimsSet claimsSet = new JWTClaimsSet.Builder()
                 .subject(user.getUsername())
@@ -93,6 +118,7 @@ public class AuthenticationService {
                         Instant.now().plus(5, ChronoUnit.HOURS).toEpochMilli()
                 ))
                 .claim("scope", buildScope(roleNames))
+                .jwtID(UUID.randomUUID().toString())
                 .build();
         Payload payload = new Payload(claimsSet.toJSONObject());
 
@@ -109,14 +135,10 @@ public class AuthenticationService {
 
     private String buildScope(List<String> roleNames) {
         StringJoiner stringJoiner = new StringJoiner(" "); //convention for scope in oath2
-        if(!CollectionUtils.isEmpty(roleNames)){
-            roleNames.forEach(roleName -> {
-                stringJoiner.add("ROLE_" + roleName);
-                Set<String> permission = rolePermissionRepository.findPermissionsByRoleId(roleName);
-                if(!CollectionUtils.isEmpty(permission)){
-                    permission.forEach(stringJoiner::add);
-                }
-            });
+        if (!CollectionUtils.isEmpty(roleNames)) {
+            roleNames.forEach(roleName -> stringJoiner.add("ROLE_" + roleName));
+            Set<String> permissionNames = rolePermissionRepository.getPermissionsNameByRoleIds(roleNames);
+            permissionNames.forEach(stringJoiner::add);
         }
         return stringJoiner.toString();
     }

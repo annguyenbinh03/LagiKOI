@@ -2,6 +2,7 @@ package com.lagikoi.be.controller;
 
 import com.lagikoi.be.dto.request.AuthenticationRequest;
 import com.lagikoi.be.dto.request.IntrospectRequest;
+import com.lagikoi.be.dto.request.LogoutRequest;
 import com.lagikoi.be.dto.response.ApiResponse;
 import com.lagikoi.be.dto.response.AuthenticationResponse;
 import com.lagikoi.be.dto.response.IntrospectResponse;
@@ -35,6 +36,13 @@ public class AuthenticationController {
     public ApiResponse<IntrospectResponse> authenticate(@RequestBody IntrospectRequest request) throws ParseException, JOSEException {
         return ApiResponse.<IntrospectResponse>builder()
                 .result(authenticationService.introspect(request))
+                .build();
+    }
+
+    @PostMapping("/logout")
+    public ApiResponse<Void> logout(@RequestBody LogoutRequest request) throws JOSEException, ParseException {
+        authenticationService.logout(request);
+        return ApiResponse.<Void>builder()
                 .build();
     }
 

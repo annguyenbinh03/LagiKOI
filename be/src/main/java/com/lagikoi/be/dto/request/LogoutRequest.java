@@ -1,13 +1,11 @@
 package com.lagikoi.be.dto.request;
 
 import lombok.AccessLevel;
-import lombok.Builder;
 import lombok.Data;
 import lombok.experimental.FieldDefaults;
 
 @Data
-@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class IntrospectRequest {
+public class LogoutRequest {
     String token;
 }
