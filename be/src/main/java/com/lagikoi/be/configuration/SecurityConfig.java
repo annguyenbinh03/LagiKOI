@@ -25,6 +25,7 @@ public class SecurityConfig {
     private final String[] PUBLIC_POST_ENDPOINTS = {"/auth/token",
             "/auth/introspect",
             "/auth/logout",
+            "/auth/refresh",
     };
 
     @Bean

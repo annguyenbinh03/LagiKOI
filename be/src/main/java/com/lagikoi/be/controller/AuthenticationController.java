@@ -3,6 +3,7 @@ package com.lagikoi.be.controller;
 import com.lagikoi.be.dto.request.AuthenticationRequest;
 import com.lagikoi.be.dto.request.IntrospectRequest;
 import com.lagikoi.be.dto.request.LogoutRequest;
+import com.lagikoi.be.dto.request.RefreshRequest;
 import com.lagikoi.be.dto.response.ApiResponse;
 import com.lagikoi.be.dto.response.AuthenticationResponse;
 import com.lagikoi.be.dto.response.IntrospectResponse;
@@ -29,6 +30,13 @@ public class AuthenticationController {
     public ApiResponse<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
         return ApiResponse.<AuthenticationResponse>builder()
                 .result(authenticationService.authenticate(request))
+                .build();
+    }
+
+    @PostMapping("/refresh")
+    public ApiResponse<AuthenticationResponse> refresh(@RequestBody RefreshRequest request) throws ParseException, JOSEException {
+        return ApiResponse.<AuthenticationResponse>builder()
+                .result(authenticationService.refreshToken(request))
                 .build();
     }
 
