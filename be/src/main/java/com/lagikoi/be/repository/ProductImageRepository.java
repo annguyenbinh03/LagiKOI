@@ -15,4 +15,9 @@ public interface ProductImageRepository extends JpaRepository<ProductImage, Stri
             "FROM ProductImage pi, Fish f " +
             "WHERE f.id = :fishId AND pi.product = f.product AND pi.isDeleted = false")
     List<ProductImageResponse> getProductImageByFishId(@Param("fishId") Integer fishId);
+
+    @Query("SELECT new com.lagikoi.be.dto.response.ProductImageResponse(pi.id, pi.imageUrl, pi.displayOrder) " +
+            "FROM ProductImage pi, Accessory a " +
+            "WHERE a.id = :accessoryId AND pi.product = a.product AND pi.isDeleted = false")
+    List<ProductImageResponse> getProductImageByAccessoryId(@Param("accessoryId") Integer accessoryId);
 }

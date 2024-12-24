@@ -27,8 +27,8 @@ public class FishController {
                 .build();
     }
 
-    @GetMapping("/{fishId}")
-    public ApiResponse<FishDetailReponse> getAllFish(@PathVariable @Valid Integer fishId) {
+    @GetMapping("/detail/{fishId}")
+    public ApiResponse<FishDetailReponse> getFishInfo(@PathVariable @Valid Integer fishId) {
         return ApiResponse.<FishDetailReponse>builder()
                 .result(fishService.getFishInfo(fishId))
                 .build();

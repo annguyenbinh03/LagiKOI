@@ -26,11 +26,6 @@ public class Accessory {
     @JoinColumn(name = "category_id", nullable = false)
     private AccessoryCategory category;
 
-    @NotNull
-    @Lob
-    @Column(name = "image_urls", nullable = false)
-    private String imageUrls;
-
     @Size(max = 50)
     @NotNull
     @Column(name = "brand", nullable = false, length = 50)
@@ -40,4 +35,6 @@ public class Accessory {
     @Column(name = "view_count", nullable = false)
     private Integer viewCount;
 
+    @Column(name = "is_deleted")
+    private Boolean isDeleted;
 }

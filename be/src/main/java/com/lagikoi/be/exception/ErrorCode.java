@@ -31,7 +31,8 @@ public enum ErrorCode {
     FISH_CATEGORY_NOT_FOUND(1102, "Fish category is empty", HttpStatus.BAD_REQUEST),
     FISH_CATEGORY_LIST_NOT_FOUND(1103, "Fish category list is empty", HttpStatus.NO_CONTENT),
 
-
+    ACCESSORY_LIST_NOT_FOUND(1201, "Fish accessories list is empty", HttpStatus.NOT_FOUND),
+    ACCESSORY_NOT_FOUND(1202, "Not found fish accessory", HttpStatus.BAD_REQUEST),
     ;
 
     int code;

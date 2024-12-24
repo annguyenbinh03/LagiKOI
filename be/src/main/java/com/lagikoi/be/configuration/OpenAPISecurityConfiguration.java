@@ -46,3 +46,5 @@ public class OpenAPISecurityConfiguration {
                                 .bearerFormat("JWT")));
     }
 }
+
+//http://localhost:8080/lagikoi/swagger-ui/index.html

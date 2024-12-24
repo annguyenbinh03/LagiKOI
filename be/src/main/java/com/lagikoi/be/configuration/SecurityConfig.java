@@ -25,6 +25,13 @@ public class SecurityConfig {
     @Autowired
     private CustomJwtDecoder customJwtDecoder;
 
+    private final String[] PUBLIC_GET_ENDPOINTS = {
+            "/accessory/get-all",
+            "/accessory/detail/**",
+            "/fish/get-all",
+            "/fish/detail/**",
+    };
+
     private final String[] PUBLIC_POST_ENDPOINTS = {"/auth/token",
             "/auth/introspect",
             "/auth/logout",
@@ -34,7 +41,7 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.authorizeHttpRequests(authorizeRequests ->
-                authorizeRequests.requestMatchers(HttpMethod.GET, "/fish/*").permitAll()
+                authorizeRequests.requestMatchers(HttpMethod.GET, PUBLIC_GET_ENDPOINTS).permitAll()
                         .requestMatchers(HttpMethod.POST, PUBLIC_POST_ENDPOINTS).permitAll()
                         .requestMatchers("/v3/api-docs/**",
                                 "/swagger-ui/**",
