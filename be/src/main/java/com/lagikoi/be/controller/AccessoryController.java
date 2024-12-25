@@ -39,4 +39,12 @@ public class AccessoryController {
                 .result(accessoryService.create(request))
                 .build();
     }
+
+    @DeleteMapping("/delete/{accessoryId}")
+    public ApiResponse<Void> createFish(@PathVariable @Valid Integer accessoryId) {
+        accessoryService.delete(accessoryId);
+        return ApiResponse.<Void>builder()
+                .message("Accessory deleted")
+                .build();
+    }
 }

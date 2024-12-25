@@ -18,6 +18,7 @@ import com.lagikoi.be.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -56,6 +57,7 @@ public class AccessoryService {
         return response;
     }
 
+    @PreAuthorize("hasAuthority('CREATE_ACCESSORY')")
     @Transactional
     public Integer create(AccessoryCreationRequest request) {
 
@@ -75,6 +77,13 @@ public class AccessoryService {
         saveImagesForAccessory(request.getImages(), product);
 
         return accessory.getId();
+    }
+
+    @PreAuthorize("hasAuthority('DELETE_ACCESSORY')")
+    public void delete(Integer accessoryId) {
+        Accessory accessory = accessoryRepository.findById(accessoryId).orElseThrow(() -> new AppException(ErrorCode.ACCESSORY_NOT_FOUND));
+        accessory.setIsDeleted(true);
+        accessoryRepository.save(accessory);
     }
 
     private void saveImagesForAccessory(List<ProductImageCreationRequest> requestAccessoryImages, Product product) {
