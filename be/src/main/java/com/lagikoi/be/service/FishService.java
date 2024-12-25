@@ -80,7 +80,7 @@ public class FishService {
         fishRepository.save(fish);
 
         //set images
-        saveImagesForFish(request.getImageUrls(), fish);
+        saveImagesForFish(request.getImageUrls(), product);
 
         return fish.getId();
     }
@@ -89,9 +89,9 @@ public class FishService {
         return id < 1000 ? String.format("#%03d", id) : "#" + id;
     }
 
-    private void saveImagesForFish(List<ProductImageCreationRequest> requestFishImages, Fish fish) {
+    private void saveImagesForFish(List<ProductImageCreationRequest> requestFishImages, Product product) {
         for (ProductImageCreationRequest fishImagesCreationRequest : requestFishImages) {
-            ProductImage fishImage = productImageMapper.prepareProductImageForSave(fishImagesCreationRequest, fish);
+            ProductImage fishImage = productImageMapper.prepareProductImageForSave(fishImagesCreationRequest, product);
             productImageRepository.save(fishImage);
         }
     }

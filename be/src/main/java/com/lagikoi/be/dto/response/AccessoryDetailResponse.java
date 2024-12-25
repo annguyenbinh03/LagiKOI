@@ -28,7 +28,7 @@ public class AccessoryDetailResponse {
         this.id = id;
         this.name = name;
         this.description = description;
-        this.price = price;
+        this.price = price; 
         this.stock = stock;
         this.brand = brand;
         this.viewCount = viewCount;

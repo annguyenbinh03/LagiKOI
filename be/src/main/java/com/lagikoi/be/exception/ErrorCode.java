@@ -28,11 +28,13 @@ public enum ErrorCode {
     FISH_CREATION_NAME_SIZE(1102, "Fish name cannot be larger than 255 characters", HttpStatus.BAD_REQUEST),
     FISH_LIST_NOT_FOUND(1100, "Fish list is empty", HttpStatus.NO_CONTENT),
     FISH_NOT_FOUND(1101, "Not found fish", HttpStatus.BAD_REQUEST),
-    FISH_CATEGORY_NOT_FOUND(1102, "Fish category is empty", HttpStatus.BAD_REQUEST),
+    FISH_CATEGORY_NOT_FOUND(1102, "Not found fish category", HttpStatus.BAD_REQUEST),
     FISH_CATEGORY_LIST_NOT_FOUND(1103, "Fish category list is empty", HttpStatus.NO_CONTENT),
 
     ACCESSORY_LIST_NOT_FOUND(1201, "Fish accessories list is empty", HttpStatus.NOT_FOUND),
     ACCESSORY_NOT_FOUND(1202, "Not found fish accessory", HttpStatus.BAD_REQUEST),
+    ACCESSORY_CREATION_NAME_SIZE(1102, "Accessory name cannot be larger than 255 characters", HttpStatus.BAD_REQUEST),
+    ACCESSORY_CATEGORY_NOT_FOUND(1102, "Not found accessory category", HttpStatus.BAD_REQUEST),
     ;
 
     int code;

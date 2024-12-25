@@ -1,15 +1,13 @@
 package com.lagikoi.be.controller;
 
+import com.lagikoi.be.dto.request.AccessoryCreationRequest;
 import com.lagikoi.be.dto.response.*;
 import com.lagikoi.be.service.AccessoryService;
 import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -31,6 +29,14 @@ public class AccessoryController {
     public ApiResponse<AccessoryDetailResponse> getAccessoryInfo(@PathVariable @Valid Integer accessoryId) {
         return ApiResponse.<AccessoryDetailResponse>builder()
                 .result(accessoryService.getAccessoryInfo(accessoryId))
+                .build();
+    }
+
+    //Return id of created accessory
+    @PostMapping("/create")
+    public ApiResponse<Integer> createFish(@RequestBody @Valid AccessoryCreationRequest request) {
+        return ApiResponse.<Integer>builder()
+                .result(accessoryService.create(request))
                 .build();
     }
 }
