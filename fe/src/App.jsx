@@ -9,6 +9,7 @@ import Unauthorized from "./components/Unauthorized";
 import Login from "./components/Login";
 import Missing from "./components/Missing";
 import Home from "./components/Home";
+import Admin from "./components/Admin";
 
 function App() {
   return (
@@ -17,6 +18,8 @@ function App() {
         <Route path="/" element={<Home />} />
 
         <Route path="login" element={<Login />} />
+
+        <Route path="/admin" element={<Admin />} />
 
         <Route path="/unauthorized" element={<Unauthorized />} />
 

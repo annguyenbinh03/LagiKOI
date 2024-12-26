@@ -3,14 +3,22 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/Container";
 import InputGroup from "react-bootstrap/InputGroup";
 
-import { Link } from "react-router-dom";
+import { Link, replace, useLocation, useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import { useEffect, useState } from "react";
 import { getToken } from "../api/authentication";
+import useAuth from "../hooks/useAuth";
+import { jwtDecode } from "jwt-decode";
 
 const Login = () => {
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const { setAuth } = useAuth();
+
+  const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   const handleChangeUsername = (e) => {
     setUsername(e.target.value);
@@ -20,16 +28,41 @@ const Login = () => {
     setPassword(e.target.value);
   };
 
-  const handleClickSubmit = async () => {
-    try {
-      var response = await getToken(username, password);
-      console.log(response)
-    } catch (error) {
-      console.log(error)
-    }
+  const getRoles = (scopes) => {
+    let roles = [];
+    scopes.forEach((item) => {
+      if (item.startsWith("ROLE_")) roles.push(item);
+    });
+    return roles;
   };
 
+  const getAuthorities = (scopes) => {
+    let authorities = [];
+    scopes.forEach((item) => {
+      if (!item.startsWith("ROLE_")) authorities.push(item);
+    });
+    return authorities;
+  };
 
+  const handleClickSubmit = async () => {
+    try {
+      const response = await getToken(username, password);
+      const token = response.result.token;
+      const decoded = jwtDecode(token);
+      console.log(decoded);
+      localStorage.setItem("lagikoiToken", token);
+      const scopeArray = decoded.scope.split(' ');
+      const roles = getRoles(scopeArray);
+      const authorities = getAuthorities(scopeArray);
+      setAuth({ username, roles, authorities, token });
+      if (from === "/") {
+        if (roles.includes("ROLE_ADMIN")) navigate("/admin", { replace: true });
+        else navigate('/', { replace: true });
+      } else navigate(from, { replace: true });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <Container>
