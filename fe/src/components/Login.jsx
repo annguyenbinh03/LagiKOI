@@ -9,6 +9,7 @@ import { useEffect, useState } from "react";
 import { getToken } from "../api/authentication";
 import useAuth from "../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
+import { Bounce, toast } from "react-toastify";
 
 const Login = () => {
   const [username, setUsername] = useState("");
@@ -51,13 +52,24 @@ const Login = () => {
       const decoded = jwtDecode(token);
       console.log(decoded);
       localStorage.setItem("lagikoiToken", token);
-      const scopeArray = decoded.scope.split(' ');
+      const scopeArray = decoded.scope.split(" ");
       const roles = getRoles(scopeArray);
       const authorities = getAuthorities(scopeArray);
       setAuth({ username, roles, authorities, token });
+      toast.success("Đăng nhập thành công!", {
+        position: "top-right",
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       if (from === "/") {
         if (roles.includes("ROLE_ADMIN")) navigate("/admin", { replace: true });
-        else navigate('/', { replace: true });
+        else navigate("/", { replace: true });
       } else navigate(from, { replace: true });
     } catch (error) {
       console.log(error);

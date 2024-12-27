@@ -5,11 +5,19 @@ const Home = () => {
         <section>
             <h1>Home</h1>
             <br />
-            <Link to="/Login">Go to the Login page</Link>
+            <Link to="/login">Go to the Login page</Link>
             <br />
-            <Link to="/admin">Go to the Missing page</Link>
+            <Link to="/fish-detail">Go to the fish detail page</Link>
             <br />
-            <Link to="/linkpage">Go to the Unauthorized page</Link>
+            <Link to="/order">Go to the order page</Link>
+            <br />
+            <Link to="/profile">Go to the profile page</Link>
+            <br />
+            <Link to="/admin">Go to the admin page</Link>
+            <br />
+            <Link to="/abcxyz">Go to the missing page</Link>
+            <br />
+            <Link to="/unauthorized">Go to the Unauthorized page</Link>
         </section>
     )
 }
