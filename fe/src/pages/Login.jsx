@@ -6,7 +6,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import { Link, replace, useLocation, useNavigate } from "react-router-dom";
 import Row from "react-bootstrap/Row";
 import { useEffect, useState } from "react";
-import { getToken } from "../api/authentication";
+import { getToken } from "../services/authentication";
 import useAuth from "../hooks/useAuth";
 import { jwtDecode } from "jwt-decode";
 import { Bounce, toast } from "react-toastify";

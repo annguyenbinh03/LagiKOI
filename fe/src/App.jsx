@@ -4,46 +4,49 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-import Layout from "./components/Layout";
-import Unauthorized from "./components/Unauthorized";
-import Login from "./components/Login";
-import Missing from "./components/Missing";
-import Home from "./components/Home";
-import Admin from "./components/Admin";
-import FishDetail from "./components/FishDetail";
+import Unauthorized from "./pages/Unauthorized";
+import Login from "./pages/Login";
+import Missing from "./pages/Missing";
+import Home from "./pages/Home";
+import Admin from "./pages/Admin";
+import FishDetail from "./pages/FishDetail";
 import RequireAuth from "./components/RequireAuth";
-import Order from "./components/Order";
-import Profile from "./components/Profile";
+import Order from "./pages/Order";
+import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
+import UserLayout from "./components/UserLayout";
+import ManagerLayout from "./components/ManagerLayout";
 
 const ROLES = {
-  'USER' : 'ROLE_USER',
-  'MANAGER' : 'ROLE_MANAGER',
-  'ADMIN' : 'ROLE_ADMIN',
-}
+  USER: "ROLE_USER",
+  MANAGER: "ROLE_MANAGER",
+  ADMIN: "ROLE_ADMIN",
+};
 
 function App() {
   return (
     <>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/fish-detail" element={<FishDetail />} />
+      <main className="App">
+        <Routes>
+          <Route path="/" element={<UserLayout />}>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/fish-detail" element={<FishDetail />} />
 
-          <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
-            <Route path="/order" element={<Order />} />
-            <Route path="/profile" element={<Profile />} />
+            <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
+              <Route path="/order" element={<Order />} />
+              <Route path="/profile" element={<Profile />} />
+            </Route>
           </Route>
-
           <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
-            <Route path="/admin" element={<Admin />} />
+            <Route path="/admin" element={<ManagerLayout />}>
+              <Route index element={<Admin />} />
+            </Route>
           </Route>
-
           <Route path="/unauthorized" element={<Unauthorized />} />
           <Route path="*" element={<Missing />} />
-        </Route>
-      </Routes>
+        </Routes>
+      </main>
       <ToastContainer />
     </>
   );

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 const Home = () => {
     return (
-        <section>
+        <section className="text-center my-5"> 
             <h1>Home</h1>
             <br />
             <Link to="/login">Go to the Login page</Link>
