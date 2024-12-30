@@ -29,6 +29,8 @@ public class SecurityConfig {
             "/accessory/get-all",
             "/accessory/detail/**",
             "/fish/get-all",
+            "/fish/get",
+            "/fish/available/total",
             "/fish/detail/**",
     };
 

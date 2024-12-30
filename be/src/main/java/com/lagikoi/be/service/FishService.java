@@ -20,10 +20,14 @@ import com.lagikoi.be.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -51,6 +55,26 @@ public class FishService {
         return fishGetAllResponseList;
     }
 
+    public List<FishGetAllResponse> getFish(Integer page, Integer size, String sortBy, String order) {
+
+        Sort.Direction sortDirection = "asc".equalsIgnoreCase(order) ? Sort.Direction.ASC : Sort.Direction.DESC;
+
+        Page<FishGetAllResponse> fishPage = fishRepository.getFish( PageRequest.of(page, size, Sort.by(sortDirection, sortBy)));
+
+        List<FishGetAllResponse> fishGetAllResponseList = fishPage.getContent().stream()
+                .map(fish -> {
+                    FishGetAllResponse response = fish;
+                    response.setCode(generateCodeForFish(fish.getId()));
+                    return response;
+                })
+                .collect(Collectors.toList());
+
+        if (fishGetAllResponseList.isEmpty())
+            throw new AppException(ErrorCode.FISH_LIST_NOT_FOUND);
+
+        return fishGetAllResponseList;
+    }
+
     public FishDetailReponse getFishInfo(Integer fishId) {
         FishDetailReponse response = fishRepository.getFishInfo(fishId);
 
@@ -62,6 +86,10 @@ public class FishService {
         response.setImages(productImageRepository.getProductImageByFishId(fishId));
 
         return response;
+    }
+
+    public long getTotalAvailableFish() {
+        return fishRepository.countAvailableFish();
     }
 
     @Transactional

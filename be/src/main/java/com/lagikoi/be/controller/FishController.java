@@ -27,10 +27,27 @@ public class FishController {
                 .build();
     }
 
+    @GetMapping("/get")
+    public ApiResponse<List<FishGetAllResponse>> getFish( @RequestParam(defaultValue = "0") Integer page,
+                                                          @RequestParam(defaultValue = "10") Integer size,
+                                                          @RequestParam(defaultValue = "id") String sortBy,
+                                                          @RequestParam(defaultValue = "des") String order) {
+        return ApiResponse.<List<FishGetAllResponse>>builder()
+                .result(fishService.getFish(page, size, sortBy, order))
+                .build();
+    }
+
     @GetMapping("/detail/{fishId}")
     public ApiResponse<FishDetailReponse> getFishInfo(@PathVariable @Valid Integer fishId) {
         return ApiResponse.<FishDetailReponse>builder()
                 .result(fishService.getFishInfo(fishId))
+                .build();
+    }
+
+    @GetMapping("/available/total")
+    public ApiResponse<Long> getTotalAvailableFish() {
+        return ApiResponse.<Long>builder()
+                .result(fishService.getTotalAvailableFish())
                 .build();
     }
 

@@ -47,4 +47,4 @@ public class OpenAPISecurityConfiguration {
     }
 }
 
-//http://localhost:8080/lagikoi/swagger-ui/index.html
+// http://localhost:8080/lagikoi/api/v1/swagger-ui/index.html#/

@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/accessory")
+@RequestMapping("/accessories")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class AccessoryController {
     AccessoryService accessoryService;
