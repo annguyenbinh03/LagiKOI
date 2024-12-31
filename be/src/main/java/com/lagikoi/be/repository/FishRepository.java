@@ -35,7 +35,7 @@ public interface FishRepository extends JpaRepository<Fish, Integer> {
             "JOIN FishCategory kc ON f.category = kc " +
             "JOIN ProductImage pi ON f.product = pi.product" +
             " WHERE f.isDeleted = false AND pi.displayOrder = 1")
-    Page<FishGetAllResponse> getFish(PageRequest pageable);
+    Page<FishGetAllResponse> getFish(PageRequest pageRequest);
 
     @Query("SELECT COUNT(f) FROM Fish f, Product p WHERE f.isDeleted = false AND f.product = p AND p.stock > 0")
     long countAvailableFish();

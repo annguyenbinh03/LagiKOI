@@ -16,7 +16,17 @@ INSERT INTO product ( id, name, description, price, stock, created_at) VALUES
 ('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 'Koi Fish J', 'A pure white koi fish', 4000000, 1, NOW()),
 ('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 'Koi Fish K', 'A red and yellow koi fish', 5200000, 1, NOW()),
 ('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'Koi Fish L', 'A koi fish with rainbow scales', 11000000, 1, NOW()),
-('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'Koi Fish M', 'A rare albino koi fish', 12000000, 1, NOW());
+('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'Koi Fish M', 'A rare albino koi fish', 12000000, 1, NOW()),
+('0ec3276f-a284-405c-94d0-a1e54b8d17ef', 'Máy lọc nước Koi Pond Aqua', 'Máy lọc dành cho hồ cá Koi chuyên nghiệp.', 1200000, 10, NOW()),
+('5e65eb76-25ea-403d-9e91-0ebea1de0963', 'Thức ăn Koi Premium Growth', 'Thức ăn cao cấp giúp cá Koi phát triển tốt.', 450000, 20, NOW()),
+('2de33958-1d77-449b-a484-44eefc059f3f', 'Bộ sưởi ấm bể cá', 'Giúp điều chỉnh nhiệt độ ổn định cho bể cá.', 600000, 15, NOW()),
+('9ad84c23-0e55-4495-b1ff-fe5bc998db3a', 'Đèn LED RGB Koi Pond', 'Đèn LED tạo hiệu ứng ánh sáng tuyệt đẹp cho hồ cá.', 750000, 8, NOW()),
+('4f0b322a-bd33-47a8-bbff-1a1320083778', 'Máy bơm hồ cá Koi Pro Max', 'Máy bơm công suất lớn dành cho hồ cá Koi.', 1500000, 5, NOW()),
+('a2f55dbe-82e7-4b7a-a0ff-83553640f310', 'Vợt bắt cá cao cấp', 'Vợt được thiết kế đặc biệt để bắt cá mà không gây tổn thương.', 200000, 50, NOW()),
+('37a2ee64-c82b-4022-903f-70752c0e28d7', 'Hệ thống lọc tràn', 'Hệ thống lọc tràn giúp giữ nước hồ luôn trong sạch.', 2000000, 3, NOW()),
+('ac65c323-221e-4c4b-a5a9-b794d8d3a313', 'Đầu phun oxy tạo bọt', 'Đầu phun oxy giúp tăng lượng oxy hòa tan trong nước.', 300000, 25, NOW()),
+('f9ec94fb-b0a2-4124-8916-18f29cbfd270', 'Bộ test nước hồ Koi', 'Kiểm tra nhanh các chỉ số nước trong hồ cá Koi.', 150000, 100, NOW()),
+('c3e31bb2-2728-44c0-a261-7c9e31f78a31', 'Máy hút cặn đáy hồ', 'Thiết bị chuyên dụng để vệ sinh đáy hồ cá.', 2500000, 2, NOW());
 
 INSERT INTO fish_category (name, description) VALUES
 ('SIRO', 'A category of koi known for their white body color with minimal markings.'),
@@ -49,7 +59,18 @@ INSERT INTO fish (product_id, category_id, age, gender, size, farm_name, view_co
 INSERT INTO accessory (product_id, id, brand, view_count, category_id, is_deleted ) VALUES
 ('a1508392-bfbc-4a6b-8242-1634b4fb4ce7', 1, 'Growth & Color', 0, 1, false),
 ('4b46f9ff-d875-4613-a00a-ce61732adfb3', 2, 'Jebao GL13', 0, 2, false),
-('cb214502-03ea-47ea-9e6d-c7f4457989de', 3, 'SUNSUN', 0, 3, false);
+('cb214502-03ea-47ea-9e6d-c7f4457989de', 3, 'SUNSUN', 0, 3, false),
+('0ec3276f-a284-405c-94d0-a1e54b8d17ef', 4, 'AquaTech', 0, 1, FALSE),
+('5e65eb76-25ea-403d-9e91-0ebea1de0963', 5, 'PremiumFood', 0, 2, FALSE),
+('2de33958-1d77-449b-a484-44eefc059f3f', 6, 'AquaWarm', 0, 3, FALSE),
+('9ad84c23-0e55-4495-b1ff-fe5bc998db3a', 7, 'RGBLight', 0, 1, FALSE),
+('4f0b322a-bd33-47a8-bbff-1a1320083778', 8, 'PumpMaster', 0, 2, FALSE),
+('a2f55dbe-82e7-4b7a-a0ff-83553640f310', 9, 'FishNet', 0, 2, FALSE),
+('37a2ee64-c82b-4022-903f-70752c0e28d7', 10, 'FilterTech', 0, 3, FALSE),
+('ac65c323-221e-4c4b-a5a9-b794d8d3a313', 11, 'BubbleOxy', 0, 3, FALSE),
+('f9ec94fb-b0a2-4124-8916-18f29cbfd270', 12, 'WaterTest', 0, 3, FALSE),
+('c3e31bb2-2728-44c0-a261-7c9e31f78a31', 13, 'BottomClean', 0, 2, FALSE);
+
 
 INSERT INTO product_image (product_id, image_url, display_order, is_deleted, created_at) VALUES
 ('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'https://example.com/images/koi_fish_a_1.jpg', 1, FALSE, NOW()),
@@ -76,7 +97,17 @@ INSERT INTO product_image (product_id, image_url, display_order, is_deleted, cre
 ('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 'https://example.com/images/koi_fish_k_2.jpg', 2, FALSE, NOW()),
 ('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'https://example.com/images/koi_fish_l_1.jpg', 1, FALSE, NOW()),
 ('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'https://example.com/images/koi_fish_l_2.jpg', 2, FALSE, NOW()),
-('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'https://example.com/images/koi_fish_m_1.jpg', 1, FALSE, NOW());
+('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'https://example.com/images/koi_fish_m_1.jpg', 1, FALSE, NOW()),
+('0ec3276f-a284-405c-94d0-a1e54b8d17ef', 'https://example.com/images/aquatech.jpg', 1, FALSE, NOW()),
+('5e65eb76-25ea-403d-9e91-0ebea1de0963', 'https://example.com/images/premiumfood.jpg', 1, FALSE, NOW()),
+('2de33958-1d77-449b-a484-44eefc059f3f', 'https://example.com/images/aquawarm.jpg', 1, FALSE, NOW()),
+('9ad84c23-0e55-4495-b1ff-fe5bc998db3a', 'https://example.com/images/rgblight.jpg', 1, FALSE, NOW()),
+('4f0b322a-bd33-47a8-bbff-1a1320083778', 'https://example.com/images/pumpmaster.jpg', 1, FALSE, NOW()),
+('a2f55dbe-82e7-4b7a-a0ff-83553640f310', 'https://example.com/images/fishnet.jpg', 1, FALSE, NOW()),
+('37a2ee64-c82b-4022-903f-70752c0e28d7', 'https://example.com/images/filtertech.jpg', 1, FALSE, NOW()),
+('ac65c323-221e-4c4b-a5a9-b794d8d3a313', 'https://example.com/images/bubbleoxy.jpg', 1, FALSE, NOW()),
+('f9ec94fb-b0a2-4124-8916-18f29cbfd270', 'https://example.com/images/watertest.jpg', 1, FALSE, NOW()),
+('c3e31bb2-2728-44c0-a261-7c9e31f78a31', 'https://example.com/images/bottomclean.jpg', 1, FALSE, NOW());
 
 
 INSERT INTO role (name, description) VALUES

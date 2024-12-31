@@ -26,8 +26,9 @@ public class SecurityConfig {
     private CustomJwtDecoder customJwtDecoder;
 
     private final String[] PUBLIC_GET_ENDPOINTS = {
-            "/accessory/get-all",
-            "/accessory/detail/**",
+            "/accessories/get-all",
+            "/accessories/get",
+            "/accessories/detail/**",
             "/fish/get-all",
             "/fish/get",
             "/fish/available/total",

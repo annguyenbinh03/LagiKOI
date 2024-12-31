@@ -25,6 +25,16 @@ public class AccessoryController {
                 .build();
     }
 
+    @GetMapping("/get")
+    public ApiResponse<List<AccessoryGetAllResponse>> getAccessory(@RequestParam(defaultValue = "0") Integer page,
+                                                                   @RequestParam(defaultValue = "8") Integer size,
+                                                                   @RequestParam(defaultValue = "id") String sortBy,
+                                                                   @RequestParam(defaultValue = "desc") String order) {
+        return ApiResponse.<List<AccessoryGetAllResponse>>builder()
+                .result(accessoryService.getAccessories(page, size, sortBy, order))
+                .build();
+    }
+
     @GetMapping("/detail/{accessoryId}")
     public ApiResponse<AccessoryDetailResponse> getAccessoryInfo(@PathVariable @Valid Integer accessoryId) {
         return ApiResponse.<AccessoryDetailResponse>builder()

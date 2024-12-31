@@ -18,6 +18,9 @@ import com.lagikoi.be.repository.ProductRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -44,6 +47,22 @@ public class AccessoryService {
             throw new AppException(ErrorCode.ACCESSORY_LIST_NOT_FOUND);
 
         return accessoryGetAllResponseList;
+    }
+
+    public List<AccessoryGetAllResponse> getAccessories(Integer page, Integer size, String sortBy, String order) {
+        Sort.Direction sortDirection = "asc".equalsIgnoreCase(order) ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Page<AccessoryGetAllResponse> accessoryPage = accessoryRepository.getAccessories(PageRequest.of(page, size, Sort.by(sortDirection, sortBy)));
+
+        List<AccessoryGetAllResponse> accessoryGetAllResponseList = accessoryPage.getContent();
+
+        if (accessoryGetAllResponseList.isEmpty())
+            throw new AppException(ErrorCode.ACCESSORY_LIST_NOT_FOUND);
+
+        return accessoryGetAllResponseList;
+    }
+
+    public long getTotalAvailableAccessories(){
+        return accessoryRepository.countAvailableAccessory();
     }
 
     public AccessoryDetailResponse getAccessoryInfo(Integer accessoryId) {
