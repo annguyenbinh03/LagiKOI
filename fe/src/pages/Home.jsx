@@ -178,7 +178,7 @@ const Home = () => {
             <div className="col-md-6 ps-4">
               <img
                 src={img2}
-                style={{maxWidth: "550px"}}
+                style={{ maxWidth: "550px" }}
                 className="img-fluid rounded float-end"
                 alt="Ảnh cá koi dưới ánh trăng"
               />
@@ -391,6 +391,26 @@ const Home = () => {
                   <span className="visually-hidden">Next</span>
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className={`block__5 ${style.block__5}`}>
+        <div className="container py-5">
+          <div className="title">
+            <h1 className="fs-1 text-center fw-bold">TIN TỨC MỚI</h1>
+            <div className={`${style.title__underScore}`}></div>
+          </div>
+          <div className="row mt-5 text-center">
+            <div className="col-md-4">tin tuc 1</div>
+            <div className="col-md-4">tin tuc 2</div>
+            <div className="col-md-4">tin tuc 3</div>
+          </div>
+          <div className="row mt-5">
+            <div className="d-flex justify-content-center">
+              <Link className={`d-inline-block ${style.button} mx-2`}>
+                <i className="bi bi-eye-fill"></i> Xem thêm
+              </Link>
             </div>
           </div>
         </div>

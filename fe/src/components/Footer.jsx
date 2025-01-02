@@ -48,7 +48,7 @@ const Footer = () => {
       </div>
 
       <div className={`${style.copyright} py-3`}>
-        Copyright © 2024 LAGI KOI. Design by AnNguyenBinh
+        Copyright © 2024 LAGI KOI. Designed by AnNguyenBinh
       </div>
     </footer>
   );
