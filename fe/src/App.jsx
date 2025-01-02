@@ -16,8 +16,9 @@ import Profile from "./pages/Profile";
 import { ToastContainer } from "react-toastify";
 import UserLayout from "./components/UserLayout";
 import ManagerLayout from "./components/ManagerLayout";
-import Fish from "./pages/Fish"
-import UnderConstruction from "./pages/UnderConstruction"
+import Fish from "./pages/Fish";
+import UnderConstruction from "./pages/UnderConstruction";
+import Test from "./pages/Test";
 
 const ROLES = {
   USER: "ROLE_USER",
@@ -35,6 +36,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/fishs" element={<Fish />} />
             <Route path="/fish-detail" element={<FishDetail />} />
+            <Route path="/test" element={<Test />} />
 
             <Route element={<RequireAuth allowedRoles={[ROLES.USER]} />}>
               <Route path="/order" element={<Order />} />
