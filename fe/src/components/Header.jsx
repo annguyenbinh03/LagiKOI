@@ -12,11 +12,11 @@ const Header = () => {
     <header className={`sticky-top ${style.header}`}>
       <div className="container">
         <div className="row text-center">
-          <div className="navbar-brand col-md-3 d-flex justify-content-center align-items-center">
+          <div className="navbar-brand col-md-2 d-flex justify-content-center align-items-center">
             <img src={logo} width={"40px"} height={"40px"} />
           </div>
-          <nav className="navbar navbar-expand-lg navbar-dark col-md-6 p-0">
-            <div className="navbar-nav row h-100 w-100 p-0">
+          <nav className="navbar navbar-expand-lg navbar-dark col-md-8 p-0 fw-bold">
+            <div className="navbar-nav row align-items-center h-100 w-100 p-0">
               <div className={`nav-item col-md-2 ${style.nav__item}`}>
                 <Link to="/">TRANG CHỦ</Link>
               </div>
@@ -28,7 +28,7 @@ const Header = () => {
               >
                 <Dropdown.Toggle
                   as="button"
-                  className={`${style.dropdown__toggle} py-0`}
+                  className={`${style.dropdown__toggle} py-0 fw-bold`}
                 >
                   <div>CÁ KOI</div>
                 </Dropdown.Toggle>
@@ -47,7 +47,7 @@ const Header = () => {
               >
                 <Dropdown.Toggle
                   as="button"
-                  className={`${style.dropdown__toggle} py-0`}
+                  className={`${style.dropdown__toggle} py-0 fw-bold`}
                 >
                   <div>PHỤ KIỆN</div>
                 </Dropdown.Toggle>
@@ -69,7 +69,7 @@ const Header = () => {
               </div>
             </div>
           </nav>
-          <div className="col-md-3 d-flex justify-content-center align-items-center">
+          <div className="col-md-2 d-flex justify-content-center align-items-center">
             <button className={`${style.utility__button} px-2 mx-2`}>
               <i className="bi bi-bell-fill"></i>
             </button>

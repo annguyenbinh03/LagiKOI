@@ -33,7 +33,8 @@ $under-score-bg-color:  #a80000;
     border-radius: 8px;
     font-size: 20px;
     transition: background-color 0.5s ease;
-
+    text-decoration: none;
+    font-weight: 500;
     &:hover {
         background-color: $button-background-hover;
     }
@@ -51,6 +52,17 @@ $under-score-bg-color:  #a80000;
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
+}
+
+.block__4{
+    background-image: url('../images/backgrounds/home-background3.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.customerFeedback__carousel__item {
+    min-height: 360px;
 }
 
 .title__underScore {
