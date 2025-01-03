@@ -26,10 +26,9 @@ public class Fish {
     @JoinColumn(name = "category_id", nullable = false)
     private FishCategory category;
 
-    @Size(max = 15)
     @NotNull
-    @Column(name = "age", nullable = false, length = 15)
-    private String age;
+    @Column(name = "yob", nullable = false)
+    private Integer yob;
 
     @Size(max = 10)
     @NotNull

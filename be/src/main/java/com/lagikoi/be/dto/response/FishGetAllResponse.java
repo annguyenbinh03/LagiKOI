@@ -18,7 +18,7 @@ public class FishGetAllResponse {
     String description;
     BigDecimal price;
     Integer stock;
-    String age;
+    Integer yob;
     String gender;
     String size;
     String farmName;
@@ -27,14 +27,14 @@ public class FishGetAllResponse {
     String primaryImageUrl;
 
     public FishGetAllResponse(Integer id, String name, String description, BigDecimal price, Integer stock,
-                              String age, String gender, String size, String farmName, Integer viewCount,
+                              Integer yob, String gender, String size, String farmName, Integer viewCount,
                               String category, String primaryImageUrl) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
-        this.age = age;
+        this.yob = yob;
         this.gender = gender;
         this.size = size;
         this.farmName = farmName;

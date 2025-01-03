@@ -19,7 +19,7 @@ public class FishDetailReponse {
     String description;
     BigDecimal price;
     Integer stock;
-    String age;
+    Integer yob;
     String gender;
     String size;
     String farmName;
@@ -28,14 +28,14 @@ public class FishDetailReponse {
     List<ProductImageResponse> images;
 
     public FishDetailReponse(Integer id, String name, String description, BigDecimal price, Integer stock,
-                              String age, String gender, String size, String farmName, Integer viewCount,
+                             Integer yob, String gender, String size, String farmName, Integer viewCount,
                               String category) {
         this.id = id;
         this.name = name;
         this.description = description;
         this.price = price;
         this.stock = stock;
-        this.age = age;
+        this.yob = yob;
         this.gender = gender;
         this.size = size;
         this.farmName = farmName;

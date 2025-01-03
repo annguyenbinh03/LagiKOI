@@ -1,22 +1,22 @@
 USE lagikoi;
 
 INSERT INTO product ( id, name, description, price, stock, created_at) VALUES
-('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'Koi Fish A', 'A beautiful red and white koi fish', 3000000, 1, NOW()),
-('f8946ef4-2a93-4824-9d98-34b562655268', 'Koi Fish B', 'A stunning yellow koi fish', 7000000, 1, NOW()),
-('e9375127-0bb0-47bc-a99c-e1d75065c157','Koi Fish C', 'A rare black koi fish with orange spots', 10000000, 1, NOW()),
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'Aigoromo – koi', 'A beautiful fish', 30544800, 1, NOW()),
+('f8946ef4-2a93-4824-9d98-34b562655268', 'Aigoromo – koi', 'A beautiful fish', 33090200, 1, NOW()),
+('e9375127-0bb0-47bc-a99c-e1d75065c157','Aragoke – koi', 'A beautiful fish', 25454000, 1, NOW()),
 ('a1508392-bfbc-4a6b-8242-1634b4fb4ce7', 'Cám Bio Koi Growth & Color', 'BIO KOI FOOD được sản xuất theo công nghệ của Mỹ với độ dậm 42%', 350000, 10, NOW()),
 ('4b46f9ff-d875-4613-a00a-ce61732adfb3', 'Đèn Âm Nước Jebao GL13', 'Chiếu sáng non bộ, bể cá Có thể đặt ngoài trời hoặc ngâm trong nước', 550000, 15, NOW()),
 ('cb214502-03ea-47ea-9e6d-c7f4457989de','Máy sủi Oxy SUNSUN YT-818', 'Máy sủi tích điện dành cho bể cá lớn được tặng kèm một đầu chia bằng nhựa đường khí phi 4mm.', 800000, 15, NOW()),
-('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 'Koi Fish D', 'A vibrant blue koi fish', 5000000, 1, NOW()),
-('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 'Koi Fish E', 'A silver koi fish with golden fins', 8000000, 1, NOW()),
-('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 'Koi Fish F', 'A shiny metallic white koi fish', 6000000, 1, NOW()),
-('34e6db3d-3919-4c68-a872-726cdfedd38f', 'Koi Fish G', 'A beautiful orange koi fish with black markings', 5500000, 1, NOW()),
-('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 'Koi Fish H', 'A stunning red koi fish', 7500000, 1, NOW()),
-('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 'Koi Fish I', 'A black koi fish with golden spots', 9000000, 1, NOW()),
-('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 'Koi Fish J', 'A pure white koi fish', 4000000, 1, NOW()),
-('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 'Koi Fish K', 'A red and yellow koi fish', 5200000, 1, NOW()),
-('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'Koi Fish L', 'A koi fish with rainbow scales', 11000000, 1, NOW()),
-('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'Koi Fish M', 'A rare albino koi fish', 12000000, 1, NOW()),
+('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 'Aragoke – koi', 'A beautiful fish', 28508480, 1, NOW()),
+('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 'Aragoke – koi', 'A beautiful fish', 38181000, 1, NOW()),
+('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 'Asagi – koi', 'A beautiful fish', 34362900, 1, NOW()),
+('34e6db3d-3919-4c68-a872-726cdfedd38f', 'Asagi – koi', 'A beautiful fish', 76362000, 1, NOW()),
+('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 'Asagi – koi', 'A beautiful fish', 50908000, 1, NOW()),
+('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 'Doitsu Showa – koi', 'A beautiful fish', 53453400, 1, NOW()),
+('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 'Doitsu Kujyaku – koi', 'A beautiful fish', 15272400, 1, NOW()),
+('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 'Doitsu Hariwake – koi', 'A beautiful fish', 25454000, 1, NOW()),
+('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'Doitsu Bekko – koi', 'A beautiful fish', 30544800, 1, NOW()),
+('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'Doitsu Shiro Utsuri – koi', 'A beautiful fish', 33090200, 1, NOW()),
 ('0ec3276f-a284-405c-94d0-a1e54b8d17ef', 'Máy lọc nước Koi Pond Aqua', 'Máy lọc dành cho hồ cá Koi chuyên nghiệp.', 1200000, 10, NOW()),
 ('5e65eb76-25ea-403d-9e91-0ebea1de0963', 'Thức ăn Koi Premium Growth', 'Thức ăn cao cấp giúp cá Koi phát triển tốt.', 450000, 20, NOW()),
 ('2de33958-1d77-449b-a484-44eefc059f3f', 'Bộ sưởi ấm bể cá', 'Giúp điều chỉnh nhiệt độ ổn định cho bể cá.', 600000, 15, NOW()),
@@ -29,31 +29,31 @@ INSERT INTO product ( id, name, description, price, stock, created_at) VALUES
 ('c3e31bb2-2728-44c0-a261-7c9e31f78a31', 'Máy hút cặn đáy hồ', 'Thiết bị chuyên dụng để vệ sinh đáy hồ cá.', 2500000, 2, NOW());
 
 INSERT INTO fish_category (name, description) VALUES
-('SIRO', 'A category of koi known for their white body color with minimal markings.'),
-('SHOWA', 'A type of koi with black, red, and white coloring.'),
-('KOHAKU', 'A classic koi with red and white colors, one of the most popular varieties.');
+('Aigoromo', 'Aigoromo là giống cá Koi có nền trắng với các mảng màu đỏ đặc trưng, nhưng được phủ thêm một lớp vảy màu xanh dương nhạt ở các cạnh, tạo nên vẻ đẹp độc đáo và nhẹ nhàng.'),
+('Aragoke', 'Aragoke là giống cá Koi với lớp vảy nổi bật, to và rõ ràng, tạo hiệu ứng "vảy giáp sắt". Loại này thường được tìm thấy ở các dòng Koi Doitsu.'),
+('Asagi', 'Asagi là một trong những giống cá Koi cổ điển, có màu xanh dương nhạt trên lưng với hoa văn hình lưới và màu đỏ cam ở hai bên má, bụng và vây. Đây là giống Koi thanh lịch và được yêu thích.'),
+('Doitsu', 'Doitsu là dòng cá Koi không có vảy hoặc chỉ có một hàng vảy chạy dọc theo hai bên sống lưng. Loại này nổi bật với màu sắc sáng và hoa văn rõ nét.');
+
+INSERT INTO fish (product_id, category_id, yob, gender, size, farm_name, view_count, is_deleted) VALUES
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 1, 2022, 'Male', '16.00 inch / 41.5 cm', 'Sakazume Koi Farm', 0, false),
+('f8946ef4-2a93-4824-9d98-34b562655268', 1, 2022, 'Male', '15.00 inch / 39.5 cm', 'Sakazume Koi Farm', 0, false),
+('e9375127-0bb0-47bc-a99c-e1d75065c157', 2, 2023, 'Female', '17.00 inch / 45 cm', 'Marusen Koi Farm', 0, false),
+('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 2, 2023, 'Male', '17.00 inch / 44 cm', 'Marusen Koi Farm', 0, false),
+('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 2, 2022, 'Female', '22.00 inch / 57 cm', 'Ozumi Ikarashi Koi Farm', 0, false),
+('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 3, 2022, 'Female', '20.00 inch / 53 cm', 'Fukazawa Koi Farm', 0, false),
+('34e6db3d-3919-4c68-a872-726cdfedd38f', 3, 2023, 'Female', ' 19.00 inch / 50 cm', 'Oya Koi Farm', 0, false),
+('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 3, 2022, 'Male', '18.00 inch / 47 cm','Otsuka Koi Farm', 0, false),
+('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 4, 2023, 'Female', '18.00 inch / 47 cm', 'Hiroi Koi Farm', 0, false),
+('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 4, 2023, 'Male', '15.00 inch / 39 cm', 'Kaneko Koi Farm', 0, false),
+('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 4, 2022, 'Female', '17.00 inch / 44 cm', 'Koi Fukazawa Farm', 0, false),
+('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 4, 2023, 'Female', '17.00 inch / 45 cm', 'Maruhide Koi Farm', 0, false),
+('98765aef-2c3e-47bc-814d-82c7fa935fa1', 4, 2022, 'Male', '14.00 inch / 36 cm', 'Hiroi Koi Farm', 0, false);
+
 
 INSERT INTO accessory_category (id, name, description, is_deleted) VALUES 
 ( 1, 'Thức ăn', 'Cám cá koi', false),
 ( 2, 'Đèn Âm Nước', 'Chiếu sáng non bộ, bể cá Có thể đặt ngoài trời hoặc ngâm trong nước', false),
 ( 3, 'Máy sủi Oxy', 'Thổi khí Cung cấp oxi hồ cá koi trong chăn nuôi thủy sản, các bể vi sinh hiếu khí, thu hồi khí Biogas, sục khí lòng hồ, ngăn chặn phân hủy kị khí', false);
-
-INSERT INTO fish (product_id, category_id, age, gender, size, farm_name, view_count, is_deleted) VALUES
-('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 1, '2 years', 'Male', 'Medium', 'Koi Farm A', 0, false),
-('f8946ef4-2a93-4824-9d98-34b562655268', 2, '3 years', 'Female', 'Large', 'Koi Farm B', 0, false),
-('e9375127-0bb0-47bc-a99c-e1d75065c157', 3, '1 year', 'Male', 'Small', 'Koi Farm C', 0, false),
-('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 1, '2 years', 'Male', 'Medium', 'Koi Farm D', 0, false),
-('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 2, '1.5 years', 'Female', 'Large', 'Koi Farm E', 0, false),
-('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 3, '3 years', 'Male', 'Medium', 'Koi Farm F', 0, false),
-('34e6db3d-3919-4c68-a872-726cdfedd38f', 1, '1 year', 'Female', 'Small', 'Koi Farm G', 0, false),
-('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 2, '2.5 years', 'Male', 'Medium', 'Koi Farm H', 0, false),
-('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 3, '3.5 years', 'Female', 'Large', 'Koi Farm I', 0, false),
-('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 1, '1 year', 'Male', 'Small', 'Koi Farm J', 0, false),
-('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 2, '2 years', 'Female', 'Medium', 'Koi Farm K', 0, false),
-('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 3, '3 years', 'Male', 'Large', 'Koi Farm L', 0, false),
-('98765aef-2c3e-47bc-814d-82c7fa935fa1', 1, '4 years', 'Female', 'Extra Large', 'Koi Farm M', 0, false);
-
-
 
 
 INSERT INTO accessory (product_id, id, brand, view_count, category_id, is_deleted ) VALUES
@@ -73,31 +73,22 @@ INSERT INTO accessory (product_id, id, brand, view_count, category_id, is_delete
 
 
 INSERT INTO product_image (product_id, image_url, display_order, is_deleted, created_at) VALUES
-('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'https://example.com/images/koi_fish_a_1.jpg', 1, FALSE, NOW()),
-('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'https://example.com/images/koi_fish_a_2.jpg', 2, FALSE, NOW()),
-('f8946ef4-2a93-4824-9d98-34b562655268', 'https://example.com/images/koi_fish_b_1.jpg', 1, FALSE, NOW()),
-('f8946ef4-2a93-4824-9d98-34b562655268', 'https://example.com/images/koi_fish_b_2.jpg', 2, FALSE, NOW()),
-('f8946ef4-2a93-4824-9d98-34b562655268', 'https://example.com/images/koi_fish_b_3.jpg', 3, FALSE, NOW()),
-('e9375127-0bb0-47bc-a99c-e1d75065c157', 'https://example.com/images/koi_fish_c_1.jpg', 1, FALSE, NOW()),
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735875337/f7ilcephz4gm5scicvzu.jpg', 1, FALSE, NOW()),
+('f8946ef4-2a93-4824-9d98-34b562655268', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735878356/lmgcwdss3gfz8fteoo4z.jpg', 1, FALSE, NOW()),
+('e9375127-0bb0-47bc-a99c-e1d75065c157', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735878450/vvyv997bai62awkotlo3.jpg', 1, FALSE, NOW()),
 ('a1508392-bfbc-4a6b-8242-1634b4fb4ce7', 'https://example.com/images/bio koi.jpg', 1, FALSE, NOW()),
 ('4b46f9ff-d875-4613-a00a-ce61732adfb3', 'https://example.com/images/jebao gl13.jpg', 1, FALSE, NOW()),
 ('cb214502-03ea-47ea-9e6d-c7f4457989de', 'https://example.com/images/sun sun yt18.jpg', 1, FALSE, NOW()),
-('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 'https://example.com/images/koi_fish_d_1.jpg', 1, FALSE, NOW()),
-('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 'https://example.com/images/koi_fish_e_1.jpg', 1, FALSE, NOW()),
-('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 'https://example.com/images/koi_fish_e_2.jpg', 2, FALSE, NOW()),
-('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 'https://example.com/images/koi_fish_e_3.jpg', 3, FALSE, NOW()),
-('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 'https://example.com/images/koi_fish_f_1.jpg', 1, FALSE, NOW()),
-('34e6db3d-3919-4c68-a872-726cdfedd38f', 'https://example.com/images/koi_fish_g_1.jpg', 1, FALSE, NOW()),
-('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 'https://example.com/images/koi_fish_h_1.jpg', 1, FALSE, NOW()),
-('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 'https://example.com/images/koi_fish_i_1.jpg', 1, FALSE, NOW()),
-('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 'https://example.com/images/koi_fish_i_2.jpg', 2, FALSE, NOW()),
-('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 'https://example.com/images/koi_fish_j_1.jpg', 1, FALSE, NOW()),
-('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 'https://example.com/images/koi_fish_j_2.jpg', 2, FALSE, NOW()),
-('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 'https://example.com/images/koi_fish_k_1.jpg', 1, FALSE, NOW()),
-('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 'https://example.com/images/koi_fish_k_2.jpg', 2, FALSE, NOW()),
-('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'https://example.com/images/koi_fish_l_1.jpg', 1, FALSE, NOW()),
-('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'https://example.com/images/koi_fish_l_2.jpg', 2, FALSE, NOW()),
-('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'https://example.com/images/koi_fish_m_1.jpg', 1, FALSE, NOW()),
+('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735878640/wm3gb8mfcw5a9qbqkqmw.jpg', 1, FALSE, NOW()),
+('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735879036/asgshzsjiqi1tgqcvlip.jpg', 1, FALSE, NOW()),
+('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735879241/vjwkhbuujtinodzazzqb.jpg', 1, FALSE, NOW()),
+('34e6db3d-3919-4c68-a872-726cdfedd38f', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735879376/qxr52wgxaiy9fdxtysz6.jpg', 1, FALSE, NOW()),
+('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735879558/uxrpwzccrduxfgc5uqsf.jpg', 1, FALSE, NOW()),
+('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735879836/ofujsins0tbrqwsss0is.jpg', 1, FALSE, NOW()),
+('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735879995/mmjj4cg3nu5mrwsmhswb.jpg', 1, FALSE, NOW()),
+('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735880143/tiohdccb4sve5rer51fo.jpg', 1, FALSE, NOW()),
+('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735880346/yfwhhybwuflbvdvilld9.jpg', 1, FALSE, NOW()),
+('98765aef-2c3e-47bc-814d-82c7fa935fa1', 'https://res.cloudinary.com/dqmzqwuju/image/upload/v1735880492/dofo2e7lybdhw689m2gx.jpg', 1, FALSE, NOW()),
 ('0ec3276f-a284-405c-94d0-a1e54b8d17ef', 'https://example.com/images/aquatech.jpg', 1, FALSE, NOW()),
 ('5e65eb76-25ea-403d-9e91-0ebea1de0963', 'https://example.com/images/premiumfood.jpg', 1, FALSE, NOW()),
 ('2de33958-1d77-449b-a484-44eefc059f3f', 'https://example.com/images/aquawarm.jpg', 1, FALSE, NOW()),
