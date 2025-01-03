@@ -39,7 +39,7 @@ public class Product {
     private Service service;
 
     @Lob
-    @Column(name = "description")
+    @Column(name = "description", columnDefinition = "LONGTEXT")
     private String description;
 
     @NotNull
