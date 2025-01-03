@@ -10,62 +10,89 @@ import mikamiYua from "../assets/images/customers/Mikami-Yua.jpg";
 import minamiAizawa from "../assets/images/customers/Minami-Aizawa.jpg";
 import separator from "../assets/images/separators/home-separator.jpg";
 
+import Loading from "../components/Loading";
 import style from "../assets/scss/Home.module.scss";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
+import { useState } from "react";
+import {getFish} from "../services/fishService"
+import FishCard from "../components/FishCard";
 
 const Home = () => {
+  const [fishLoading, setFishLoading] = useState(true);
+  const [fish, setFish] = useState({});
+
+
+  const fetchFishData = async () => {
+    setFishLoading(true);
+    try {
+      const response = await getFish();
+      console.log(response);
+      setFish(response.result);
+    } catch (error) {
+      console.error("Failed to fetch fish data:", error);
+    } finally {
+      setFishLoading(false);
+    }
+  };
+
+  useState(() => {
+    fetchFishData();
+  }, []);
+
+
+
   return (
     <div className="container-fluid px-0">
       <div className={`block__1`}>
         <div
-          className="carousel slide"
+          className="carousel slide carousel-fade"
           data-bs-ride="carousel"
           data-bs-wrap="true"
         >
           <div className="carousel-inner h-100">
-            <div className="carousel-item active" data-bs-interval="3000">
+            <div className={`carousel-item active`} data-bs-interval="4000">
               <img
                 src={homeBanner1}
                 className="d-block img-fluid"
                 alt="LagiKoi home banner"
               />
             </div>
-            <div className="carousel-item" data-bs-interval="3000">
+            <div className={`carousel-item`} data-bs-interval="4000">
               <img
                 src={homeBanner2}
                 className="d-block img-fluid"
                 alt="LagiKoi home banner"
               />
             </div>
-            <div className="carousel-item" data-bs-interval="3000">
+            <div className={`carousel-item`} data-bs-interval="4000">
               <img
                 src={homeBanner3}
                 className="d-block img-fluid"
                 alt="LagiKoi home banner"
               />
             </div>
-            <div
-              className={`${style.carousel__caption} top-50 start-50 translate-middle`}
-            >
-              <h1>Chào mừng đến với LagiKoi</h1>
-              <OverlayTrigger
-                key="a"
-                placement="bottom"
-                overlay={
-                  <Tooltip>Đối tác tin cậy cho vườn cá Koi hoàn hảo</Tooltip>
-                }
-              >
-                <p>完璧な錦鯉の庭の信頼できるパートナー</p>
-              </OverlayTrigger>
-              <div>
-                <Link className={`d-inline-block ${style.button} mx-2`}>
-                  Xem cá Koi mới
-                </Link>
-                <Link className={`d-inline-block ${style.button} mx-2`}>
-                  Đăng nhập ngay
-                </Link>
-              </div>
-            </div>
+          </div>
+        </div>
+        <div
+          className={`${style.carousel__caption} top-50 start-50 translate-middle`}
+        >
+          <h1>Chào mừng đến với LagiKoi</h1>
+          <OverlayTrigger
+            key="a"
+            placement="bottom"
+            overlay={
+              <Tooltip>Đối tác tin cậy cho vườn cá Koi hoàn hảo</Tooltip>
+            }
+          >
+            <p>完璧な錦鯉の庭の信頼できるパートナー</p>
+          </OverlayTrigger>
+          <div>
+            <Link className={`d-inline-block ${style.button} mx-2`}>
+              Xem cá Koi mới
+            </Link>
+            <Link className={`d-inline-block ${style.button} mx-2`}>
+              Đăng nhập ngay
+            </Link>
           </div>
         </div>
       </div>
@@ -120,29 +147,32 @@ const Home = () => {
           alt="LagiKoi home page separator"
         />
       </div>
-      <div className={`block__3  ${style.block__3}`}>
+      <div className={`block__3 ${style.block__3}`}>
         <div className="container py-5">
           <div className="title">
             <h1 className="fs-1 text-center fw-bold">CÁ KOI MỚI VỀ</h1>
             <div className={`${style.title__underScore}`}></div>
           </div>
-          <div className="row mt-5 text-center">
-            <div className="col-md-3">cá koi 1</div>
-            <div className="col-md-3">cá koi 2</div>
-            <div className="col-md-3">cá koi 3</div>
-            <div className="col-md-3">cá koi 4</div>
-            <div className="col-md-3">cá koi 5</div>
-            <div className="col-md-3">cá koi 6</div>
-            <div className="col-md-3">cá koi 7</div>
-            <div className="col-md-3">cá koi 8</div>
-          </div>
+          {fishLoading ? (
+            <Loading />
+          ) : (
+            <>
+              <div className="row px-5 mt-5 text-center">
+                  {
+                    fish?.map((item) => {
+                      return <FishCard key={item.id} fish={item} />
+                    })
+                  }
+              </div>
+            </>
+          )}
         </div>
         <div className="container py-5">
           <div className="title">
             <h1 className="fs-1 text-center fw-bold">PHỤ KIỆN NỔI BẬT</h1>
             <div className={`${style.title__underScore}`}></div>
           </div>
-          <div className="row mt-5 text-center">
+          <div className="row mt-5 px-5 text-center">
             <div className="col-md-3">phụ kiện 1</div>
             <div className="col-md-3">phụ kiện 2</div>
             <div className="col-md-3">phụ kiện 3</div>
@@ -158,7 +188,7 @@ const Home = () => {
             <h1 className="fs-1 text-center fw-bold">THI CÔNG HỒ CÁ</h1>
             <div className={`${style.title__underScore}`}></div>
           </div>
-          <div className="row mt-5 text-center">
+          <div className="row mt-5 px-5 text-center">
             <div className="col-md-3">mô hình 1</div>
             <div className="col-md-3">mô hình 2</div>
             <div className="col-md-3">mô hình 3</div>

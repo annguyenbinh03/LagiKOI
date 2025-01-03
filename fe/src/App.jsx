@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import "./App.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.min.js";
 import "bootstrap-icons/font/bootstrap-icons.css";
+import "./App.css";
 
 import Unauthorized from "./pages/Unauthorized";
 import Login from "./pages/Login";
@@ -35,6 +35,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/fishs" element={<Fish />} />
+            <Route path="/fishs/:id" element={<Fish />} />
             <Route path="/fish-detail" element={<FishDetail />} />
             <Route path="/test" element={<Test />} />
 
