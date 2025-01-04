@@ -10,6 +10,7 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "accessory")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Accessory {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,6 +31,11 @@ public class Accessory {
     @NotNull
     @Column(name = "brand", nullable = false, length = 50)
     private String brand;
+
+    @Size(max = 30)
+    @NotNull
+    @Column(name = "origin", length = 30)
+    private String origin;
 
     @NotNull
     @Column(name = "view_count", nullable = false)
