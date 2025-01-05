@@ -22,10 +22,9 @@ public class WaterPumpAccessory extends Accessory {
     @NotNull
     @Column(name = "power", nullable = false)
     private Integer power; //as watt
-    @Size(max = 20)
     @NotNull
-    @Column(name = "head_pressure", nullable = false, length = 20)
-    private String headPressure; //as m
+    @Column(name = "head_pressure", nullable = false)
+    private Double headPressure; //as m
     @Size(max = 20)
     @NotNull
     @Column(name = "flow_rate", nullable = false, length = 20)
@@ -34,8 +33,7 @@ public class WaterPumpAccessory extends Accessory {
     @NotNull
     @Column(name = "voltage", nullable = false, length = 20)
     private String voltage;
-    @Size(max = 10)
     @NotNull
-    @Column(name = "frequency", nullable = false, length = 10)
-    private Double frequency; // as hz
+    @Column(name = "frequency", nullable = false)
+    private Integer frequency; // as hz
 }
