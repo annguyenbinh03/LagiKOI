@@ -15,15 +15,18 @@ import style from "../assets/scss/Home.module.scss";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
 import { useState } from "react";
 import {getFish} from "../services/fishService"
+import { getAccessory } from "../services/accessoryService";
 import FishCard from "../components/FishCard";
+import AccessoryCard from "../components/accessory/AccessoryCard";
 
 const Home = () => {
   const [fishLoading, setFishLoading] = useState(true);
   const [fish, setFish] = useState({});
 
+  const [accessoryLoading, setAccessoryLoading] = useState(true);
+  const [accessories, setAccessories] = useState({});
 
   const fetchFishData = async () => {
-    setFishLoading(true);
     try {
       const response = await getFish();
       console.log(response);
@@ -35,8 +38,21 @@ const Home = () => {
     }
   };
 
+  const fetchAccessoryData = async () => {
+    try {
+      const response = await getAccessory();
+      console.log(response);
+      setAccessories(response.result);
+    } catch (error) {
+      console.error("Failed to fetch accessory data:", error);
+    } finally {
+      setAccessoryLoading(false);
+    }
+  };
+
   useState(() => {
     fetchFishData();
+    fetchAccessoryData();
   }, []);
 
 
@@ -156,7 +172,6 @@ const Home = () => {
           {fishLoading ? (
             <Loading />
           ) : (
-            <>
               <div className="row px-5 mt-5 text-center">
                   {
                     fish?.map((item) => {
@@ -164,7 +179,6 @@ const Home = () => {
                     })
                   }
               </div>
-            </>
           )}
         </div>
         <div className="container py-5">
@@ -172,16 +186,19 @@ const Home = () => {
             <h1 className="fs-1 text-center fw-bold">PHỤ KIỆN NỔI BẬT</h1>
             <div className={`${style.title__underScore}`}></div>
           </div>
-          <div className="row mt-5 px-5 text-center">
-            <div className="col-md-3">phụ kiện 1</div>
-            <div className="col-md-3">phụ kiện 2</div>
-            <div className="col-md-3">phụ kiện 3</div>
-            <div className="col-md-3">phụ kiện 4</div>
-            <div className="col-md-3">phụ kiện 5</div>
-            <div className="col-md-3">phụ kiện 6</div>
-            <div className="col-md-3">phụ kiện 7</div>
-            <div className="col-md-3">phụ kiện 8</div>
+          {
+            accessoryLoading ? (
+              <Loading />
+            ) : (
+              <div className="row px-5 mt-5 text-center">
+              {
+                accessories?.map((item) => {
+                  return <AccessoryCard key={item.id} accessory={item} />
+                })
+              }
           </div>
+            )
+          }
         </div>
         <div className="container py-5">
           <div className="title">

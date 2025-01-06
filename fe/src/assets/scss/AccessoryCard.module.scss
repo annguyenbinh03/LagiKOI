@@ -9,8 +9,9 @@
     overflow: hidden; 
     display: -webkit-box; 
     -webkit-box-orient: vertical; 
-    -webkit-line-clamp: 1; 
-    line-clamp: 1;
+    -webkit-line-clamp: 2; 
+    line-clamp: 2;
+    min-height: calc(1.2em * 2);
 }
 
 .card__image__container {
