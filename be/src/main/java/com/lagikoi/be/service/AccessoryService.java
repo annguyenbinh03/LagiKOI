@@ -1,10 +1,12 @@
 package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.AccessoryCreationRequest;
-import com.lagikoi.be.dto.request.FishCreationRequest;
 import com.lagikoi.be.dto.request.ProductImageCreationRequest;
 import com.lagikoi.be.dto.response.AccessoryDetailResponse;
 import com.lagikoi.be.dto.response.AccessoryGetAllResponse;
+import com.lagikoi.be.dto.response.accessory.AeratorHighlightResponse;
+import com.lagikoi.be.dto.response.accessory.FoodAccessoryHighlightResponse;
+import com.lagikoi.be.dto.response.accessory.WaterPumpHighlightResponse;
 import com.lagikoi.be.entity.*;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
@@ -25,6 +27,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -33,6 +36,10 @@ import java.util.List;
 public class AccessoryService {
     AccessoryRepository accessoryRepository;
     ProductImageRepository productImageRepository;
+
+    FoodAccessoryService foodAccessoryService;
+    AeratorAccessoryService aeratorAccessoryService;
+    WaterPumpAccessoryService waterPumpAccessoryService;
 
     AccessoryMapper accessoryMapper;
     ProductMapper productMapper;
@@ -53,7 +60,27 @@ public class AccessoryService {
         Sort.Direction sortDirection = "asc".equalsIgnoreCase(order) ? Sort.Direction.ASC : Sort.Direction.DESC;
         Page<AccessoryGetAllResponse> accessoryPage = accessoryRepository.getAccessories(PageRequest.of(page, size, Sort.by(sortDirection, sortBy)));
 
-        List<AccessoryGetAllResponse> accessoryGetAllResponseList = accessoryPage.getContent();
+        List<AccessoryGetAllResponse> accessoryGetAllResponseList = new ArrayList<>();
+
+        accessoryPage.getContent().forEach(accessory -> {
+            switch (accessory.getCategory()) {
+                case "Thức ăn":{
+                    FoodAccessoryHighlightResponse highlight = foodAccessoryService.getHighlight(accessory.getId());
+                    accessoryGetAllResponseList.add(accessoryMapper.toAccessoryResponse(accessory, highlight));
+                    break;
+                }
+                case "Máy sủi oxy":{
+                    AeratorHighlightResponse highlight = aeratorAccessoryService.getHighlight(accessory.getId());
+                    accessoryGetAllResponseList.add(accessoryMapper.toAccessoryResponse(accessory, highlight));
+                    break;
+                }
+                case "Máy bơm nước":{
+                    WaterPumpHighlightResponse highlight = waterPumpAccessoryService.getHighLight(accessory.getId());
+                    accessoryGetAllResponseList.add(accessoryMapper.toAccessoryResponse(accessory, highlight));
+                    break;
+                }
+            }
+        });
 
         if (accessoryGetAllResponseList.isEmpty())
             throw new AppException(ErrorCode.ACCESSORY_LIST_NOT_FOUND);

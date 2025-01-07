@@ -12,8 +12,8 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface AccessoryRepository extends JpaRepository<Accessory, Integer> {
-    @Query("SELECT new com.lagikoi.be.dto.response.AccessoryGetAllResponse( a.id, a.product.name, a.product.description, a.product.price, a.product.stock, " +
-            " a.brand, a.viewCount, ac.name, pi.imageUrl )" +
+    @Query("SELECT new com.lagikoi.be.dto.response.AccessoryGetAllResponse( a.id, a.product.name,  a.product.price, " +
+            " a.brand, ac.name, a.origin, pi.imageUrl )" +
             "FROM Accessory a " +
             "JOIN AccessoryCategory ac ON a.category = ac " +
             "JOIN ProductImage pi ON a.product = pi.product" +
@@ -27,8 +27,8 @@ public interface AccessoryRepository extends JpaRepository<Accessory, Integer> {
             " WHERE a.isDeleted = false AND a.id = :accessoryId")
     AccessoryDetailResponse getAccessoryInfo(@Param("accessoryId") Integer accessoryId);
 
-    @Query("SELECT new com.lagikoi.be.dto.response.AccessoryGetAllResponse( a.id, a.product.name, a.product.description, a.product.price, a.product.stock, " +
-            " a.brand, a.viewCount, ac.name, pi.imageUrl )" +
+    @Query("SELECT new com.lagikoi.be.dto.response.AccessoryGetAllResponse( a.id, a.product.name,  a.product.price, " +
+            " a.brand, ac.name, a.origin, pi.imageUrl )" +
             "FROM Accessory a " +
             "JOIN AccessoryCategory ac ON a.category = ac " +
             "JOIN ProductImage pi ON a.product = pi.product" +
