@@ -1,0 +1,16 @@
+
+.dropdown__menu{
+    max-height: 300px;
+}
+
+.dropdown__item{
+    &:hover{
+        background-color: blue;
+        color: white;
+    }
+}
+
+.dropdown__toogle__span{
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
