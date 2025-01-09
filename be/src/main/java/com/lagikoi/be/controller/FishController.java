@@ -9,6 +9,7 @@ import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.data.repository.query.Param;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,9 +32,13 @@ public class FishController {
     public ApiResponse<List<FishGetAllResponse>> getFish( @RequestParam(defaultValue = "0") Integer page,
                                                           @RequestParam(defaultValue = "8") Integer size,
                                                           @RequestParam(defaultValue = "id") String sortBy,
-                                                          @RequestParam(defaultValue = "desc") String order) {
+                                                          @RequestParam(defaultValue = "desc") String order,
+                                                          @RequestParam(defaultValue = "all") String name,
+                                                          @RequestParam(defaultValue = "all") String gender,
+                                                          @RequestParam(defaultValue = "all") String farmName,
+                                                          @RequestParam(defaultValue = "all") String categoryName) {
         return ApiResponse.<List<FishGetAllResponse>>builder()
-                .result(fishService.getFish(page, size, sortBy, order))
+                .result(fishService.getFish(page, size, sortBy, order, name, gender, farmName, categoryName))
                 .build();
     }
 

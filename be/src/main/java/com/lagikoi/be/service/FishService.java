@@ -55,11 +55,15 @@ public class FishService {
         return fishGetAllResponseList;
     }
 
-    public List<FishGetAllResponse> getFish(Integer page, Integer size, String sortBy, String order) {
+    public List<FishGetAllResponse> getFish(Integer page, Integer size, String sortBy, String order, String name, String gender, String farmName, String categoryName) {
 
+        name = "all".equals(name) ? null : name;
+        gender = "all".equals(gender) ? null : gender;
+        farmName = "all".equals(farmName) ? null : farmName;
+        categoryName = "all".equals(categoryName) ? null : categoryName;
         Sort.Direction sortDirection = "asc".equalsIgnoreCase(order) ? Sort.Direction.ASC : Sort.Direction.DESC;
 
-        Page<FishGetAllResponse> fishPage = fishRepository.getFish( PageRequest.of(page, size, Sort.by(sortDirection, sortBy)));
+        Page<FishGetAllResponse> fishPage = fishRepository.getFish( PageRequest.of(page, size, Sort.by(sortDirection, sortBy)), name, gender, farmName, categoryName);
 
         List<FishGetAllResponse> fishGetAllResponseList = fishPage.getContent().stream()
                 .map(fish -> {

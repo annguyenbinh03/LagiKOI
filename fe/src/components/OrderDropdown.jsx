@@ -28,8 +28,7 @@ const CustomMenu = forwardRef(({ children, style, className }, ref) => {
   );
 });
 
-const FilterDropdown = ({
-  placeHolder,
+const OrderDropdown = ({
   items,
   selectedItems,
   setSelectedItem,
@@ -50,7 +49,7 @@ const FilterDropdown = ({
       <Dropdown.Toggle className="bg-white w-100 text-start text-secondary overflow-hidden d-flex justify-content-between align-items-center border-secondary-subtle">
         <span className={`${style.dropdown__toogle__span}`}>
           {" "}
-          {selectedItems?.name || placeHolder}
+          {selectedItems?.name}
         </span>
       </Dropdown.Toggle>
 
@@ -59,15 +58,6 @@ const FilterDropdown = ({
           as={CustomMenu}
           className={`w-100 ${style.dropdown__menu}`}
         >
-          <Dropdown.Item
-            key={"Tất cả"}
-            onClick={() => setSelectedItem(null)}
-            className={`${selectedItems === null ? "active" : ""} ${
-              style.dropdown__item
-            } py-1 ps-2 fs-6`}
-          >
-            Tất cả
-          </Dropdown.Item>
           {items?.map((item) => (
             <Dropdown.Item
               key={item?.name}
@@ -85,4 +75,4 @@ const FilterDropdown = ({
   );
 };
 
-export default FilterDropdown;
+export default OrderDropdown;
