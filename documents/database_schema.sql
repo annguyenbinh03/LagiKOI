@@ -35,20 +35,32 @@ INSERT INTO fish_category (name, description) VALUES
 ('Asagi', 'Asagi là một trong những giống cá Koi cổ điển, có màu xanh dương nhạt trên lưng với hoa văn hình lưới và màu đỏ cam ở hai bên má, bụng và vây. Đây là giống Koi thanh lịch và được yêu thích.'),
 ('Doitsu', 'Doitsu là dòng cá Koi không có vảy hoặc chỉ có một hàng vảy chạy dọc theo hai bên sống lưng. Loại này nổi bật với màu sắc sáng và hoa văn rõ nét.');
 
-INSERT INTO fish (product_id, category_id, yob, gender, size, farm_name, view_count, is_deleted) VALUES
-('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 1, 2022, 'Male', '16.00 inch / 41.5 cm', 'Sakazume Koi Farm', 0, false),
-('f8946ef4-2a93-4824-9d98-34b562655268', 1, 2022, 'Male', '15.00 inch / 39.5 cm', 'Sakazume Koi Farm', 0, false),
-('e9375127-0bb0-47bc-a99c-e1d75065c157', 2, 2023, 'Female', '17.00 inch / 45 cm', 'Marusen Koi Farm', 0, false),
-('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 2, 2023, 'Male', '17.00 inch / 44 cm', 'Marusen Koi Farm', 0, false),
-('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 2, 2022, 'Female', '22.00 inch / 57 cm', 'Ozumi Ikarashi Koi Farm', 0, false),
-('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 3, 2022, 'Female', '20.00 inch / 53 cm', 'Fukazawa Koi Farm', 0, false),
-('34e6db3d-3919-4c68-a872-726cdfedd38f', 3, 2023, 'Female', ' 19.00 inch / 50 cm', 'Oya Koi Farm', 0, false),
-('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 3, 2022, 'Male', '18.00 inch / 47 cm','Otsuka Koi Farm', 0, false),
-('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 4, 2023, 'Female', '18.00 inch / 47 cm', 'Hiroi Koi Farm', 0, false),
-('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 4, 2023, 'Male', '15.00 inch / 39 cm', 'Kaneko Koi Farm', 0, false),
-('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 4, 2022, 'Female', '17.00 inch / 44 cm', 'Koi Fukazawa Farm', 0, false),
-('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 4, 2023, 'Female', '17.00 inch / 45 cm', 'Maruhide Koi Farm', 0, false),
-('98765aef-2c3e-47bc-814d-82c7fa935fa1', 4, 2022, 'Male', '14.00 inch / 36 cm', 'Hiroi Koi Farm', 0, false);
+INSERT INTO farm_fish (id, name, description) VALUES
+(1, 'Sakazume Koi Farm', 'none'), 
+(2, 'Marusen Koi Farm', 'none'),
+(3, 'Ozumi Ikarashi Koi Farm', 'none'),
+(4, 'Fukazawa Koi Farm', 'none'),
+(5, 'Oya Koi Farm', 'none'),
+(6, 'Otsuka Koi Farm', 'none'),
+(7, 'Hiroi Koi Farm', 'none'),
+(8, 'Kaneko Koi Farm', 'none'),
+(9, 'Maruhide Koi Farm', 'none'),
+(10, 'Hiroi Koi Farm', 'none');
+
+INSERT INTO fish (product_id, category_id, yob, gender, size, farm_id, view_count, is_deleted) VALUES
+('394fe8e7-e9bd-4847-81ce-7360fabb08b1', 1, 2022, 'Male', '16.00 inch / 41.5 cm', 1, 0, false),
+('f8946ef4-2a93-4824-9d98-34b562655268', 1, 2022, 'Male', '15.00 inch / 39.5 cm', 1, 0, false),
+('e9375127-0bb0-47bc-a99c-e1d75065c157', 2, 2023, 'Female', '17.00 inch / 45 cm', 2, 0, false),
+('0e5a7e6f-831c-40c7-a5c3-16b0e2519b12', 2, 2023, 'Male', '17.00 inch / 44 cm', 2, 0, false),
+('16aab0d8-d334-4e1a-bf2b-2cf70d9b7e25', 2, 2022, 'Female', '22.00 inch / 57 cm', 3, 0, false),
+('27b45d94-8cf8-46d7-986e-c89cfabb3c4e', 3, 2022, 'Female', '20.00 inch / 53 cm', 4, 0, false),
+('34e6db3d-3919-4c68-a872-726cdfedd38f', 3, 2023, 'Female', ' 19.00 inch / 50 cm', 5, 0, false),
+('45b6eaa5-6ec1-4c67-98b4-e7215bb836fa', 3, 2022, 'Male', '18.00 inch / 47 cm', 6, 0, false),
+('56c9e7b4-5672-4df9-9c94-b9c65e2b6d6a', 4, 2023, 'Female', '18.00 inch / 47 cm', 7, 0, false),
+('6782c7fd-19fc-44f2-993b-229cf3b4cd5f', 4, 2023, 'Male', '15.00 inch / 39 cm', 8, 0, false),
+('78fb91e2-467e-4d85-81b8-cd76f9ac4f51', 4, 2022, 'Female', '17.00 inch / 44 cm', 4, 0, false),
+('89267bf9-dcc1-44cb-95a7-35f82fbacfe1', 4, 2023, 'Female', '17.00 inch / 45 cm', 9, 0, false),
+('98765aef-2c3e-47bc-814d-82c7fa935fa1', 4, 2022, 'Male', '14.00 inch / 36 cm', 10, 0, false);
 
 
 INSERT INTO accessory_category (id, name, description, is_deleted) VALUES 

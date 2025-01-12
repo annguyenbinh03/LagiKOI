@@ -40,10 +40,10 @@ public class Fish {
     @Column(name = "size", nullable = false, length = 50)
     private String size;
 
-    @Size(max = 255)
     @NotNull
-    @Column(name = "farm_name", nullable = false)
-    private String farmName;
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @JoinColumn(name = "farm_id", nullable = false)
+    private FarmFish farmFish;
 
     @NotNull
     @Column(name = "view_count", nullable = false)
