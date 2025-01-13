@@ -33,7 +33,9 @@ public class SecurityConfig {
             "/fish/get",
             "/fish/available/total",
             "/fish/detail/**",
-            "/fish-category/get-all"
+            "/fish-category/get-all",
+            "/farm-fish/get-all",
+            "/farm-fish/detail/**"
     };
 
     private final String[] PUBLIC_POST_ENDPOINTS = {"/auth/token",

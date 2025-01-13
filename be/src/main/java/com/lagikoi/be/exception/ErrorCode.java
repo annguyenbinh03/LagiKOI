@@ -31,6 +31,9 @@ public enum ErrorCode {
     FISH_CATEGORY_NOT_FOUND(1102, "Not found fish category", HttpStatus.BAD_REQUEST),
     FISH_CATEGORY_LIST_NOT_FOUND(1103, "Fish category list is empty", HttpStatus.BAD_REQUEST),
 
+    FARM_FISH_LIST_NOT_FOUND(1151, "Farm fish list is empty", HttpStatus.BAD_REQUEST),
+    FARM_FISH_NOT_FOUND(1152, "Farm fish not found", HttpStatus.BAD_REQUEST),
+
     ACCESSORY_LIST_NOT_FOUND(1201, "Fish accessories list is empty", HttpStatus.NOT_FOUND),
     ACCESSORY_NOT_FOUND(1202, "Not found fish accessory", HttpStatus.BAD_REQUEST),
     ACCESSORY_CREATION_NAME_SIZE(1102, "Accessory name cannot be larger than 255 characters", HttpStatus.BAD_REQUEST),
