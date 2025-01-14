@@ -143,17 +143,23 @@ INSERT INTO permission (name, description) VALUES
 ('GET_FISH_CATEGORY', 'get all fish categories'),
 ('CREATE_FISH_CATEGORY', 'crate fish category permission'),
 ('CREATE_ACCESSORY', 'create accessory permission'),
-('DELETE_ACCESSORY', 'delete accessory permission');
+('DELETE_ACCESSORY', 'delete accessory permission'),
+('CREATE_FARM_FISH', 'create farm fish permission'),
+('UPDATE_FARM_FISH', 'update farm fish permission');
 
 INSERT INTO role_permission (role_name, permission_name) VALUES
 ('ADMIN', 'CREATE_FISH'),
 ('ADMIN', 'GET_USERS'),
 ('ADMIN', 'CREATE_FISH_CATEGORY'),
-('MANAGER', 'CREATE_FISH_CATEGORY'),
 ('ADMIN', 'CREATE_ACCESSORY'),
 ('ADMIN', 'DELETE_ACCESSORY'),	
+('ADMIN', 'CREATE_FARM_FISH'),	
+('ADMIN', 'UPDATE_FARM_FISH'),	
+('MANAGER', 'CREATE_FISH_CATEGORY'),
 ('MANAGER', 'CREATE_ACCESSORY'),
 ('MANAGER', 'DELETE_ACCESSORY'),
+('MANAGER', 'CREATE_FARM_FISH'),
+('MANAGER', 'UPDATE_FARM_FISH'),
 ('USER', 'GET_FISH_CATEGORY');
 
 INSERT INTO user (id, username, password, is_deleted) VALUES

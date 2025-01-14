@@ -79,6 +79,9 @@ public class AccessoryService {
                     accessoryGetAllResponseList.add(accessoryMapper.toAccessoryResponse(accessory, highlight));
                     break;
                 }
+                default:{
+                    throw new AppException(ErrorCode.ACCESSORY_CATEGORY_NOT_FOUND);
+                }
             }
         });
 
@@ -103,8 +106,8 @@ public class AccessoryService {
         return response;
     }
 
-    @PreAuthorize("hasAuthority('CREATE_ACCESSORY')")
     @Transactional
+    @PreAuthorize("hasAuthority('CREATE_ACCESSORY')")
     public Integer create(AccessoryCreationRequest request) {
 
         //create product

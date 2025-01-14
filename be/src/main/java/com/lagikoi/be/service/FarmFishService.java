@@ -2,9 +2,7 @@ package com.lagikoi.be.service;
 
 import com.lagikoi.be.dto.request.FarmFishCreationRequest;
 import com.lagikoi.be.dto.request.FarmFishUpdateRequest;
-import com.lagikoi.be.dto.response.AccessoryGetAllResponse;
 import com.lagikoi.be.dto.response.FarmFishGetAllResponse;
-import com.lagikoi.be.dto.response.FishGetAllResponse;
 import com.lagikoi.be.entity.FarmFish;
 import com.lagikoi.be.exception.AppException;
 import com.lagikoi.be.exception.ErrorCode;
@@ -13,6 +11,7 @@ import com.lagikoi.be.repository.FarmFishRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -41,6 +40,7 @@ public class FarmFishService {
     }
 
     @Transactional
+    @PreAuthorize("hasAuthority('CREATE_FARM_FISH')")
     public Integer createFarmFish(FarmFishCreationRequest request) {
         FarmFish newFarmFish = farmFishMapper.prepareFarmFishForSave(request);
         farmFishRepository.save(newFarmFish);
@@ -48,6 +48,7 @@ public class FarmFishService {
     }
 
     @Transactional
+    @PreAuthorize("hasAuthority('UPDATE_FARM_FISH')")
     public FarmFishGetAllResponse updateFarmFish(FarmFishUpdateRequest request) {
         FarmFish farmFish = farmFishRepository.findById(request.getId())
                 .orElseThrow(() -> new AppException(ErrorCode.FARM_FISH_NOT_FOUND));
