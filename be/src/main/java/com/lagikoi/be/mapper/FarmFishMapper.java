@@ -1,6 +1,7 @@
 package com.lagikoi.be.mapper;
 
 import com.lagikoi.be.dto.request.FarmFishCreationRequest;
+import com.lagikoi.be.dto.response.FarmFishGetAllResponse;
 import com.lagikoi.be.entity.FarmFish;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -9,4 +10,5 @@ import org.mapstruct.Mapping;
 public interface FarmFishMapper {
     @Mapping(target = "id", ignore = true)
     FarmFish prepareFarmFishForSave(FarmFishCreationRequest request);
+    FarmFishGetAllResponse toFarmFishGetAllResponse(FarmFish farmFish);
 }

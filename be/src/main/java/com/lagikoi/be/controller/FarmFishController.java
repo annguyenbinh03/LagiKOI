@@ -1,8 +1,11 @@
 package com.lagikoi.be.controller;
 
+import com.lagikoi.be.dto.request.FarmFishCreationRequest;
+import com.lagikoi.be.dto.request.FarmFishUpdateRequest;
 import com.lagikoi.be.dto.response.ApiResponse;
 import com.lagikoi.be.dto.response.FarmFishGetAllResponse;
 import com.lagikoi.be.service.FarmFishService;
+import jakarta.validation.Valid;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -28,6 +31,20 @@ public class FarmFishController {
     public ApiResponse<FarmFishGetAllResponse> getFarmFishInfo(@PathVariable Integer id){
         return ApiResponse.<FarmFishGetAllResponse>builder()
                 .result(farmFishService.getFarmFishInfo(id))
+                .build();
+    }
+
+    @PostMapping("/create")
+    public ApiResponse<Integer> createFarmFish(@RequestBody @Valid FarmFishCreationRequest request){
+        return ApiResponse.<Integer>builder()
+                .result(farmFishService.createFarmFish(request))
+                .build();
+    }
+
+    @PutMapping("/update")
+    public ApiResponse<FarmFishGetAllResponse> updateFarmFish(@RequestBody @Valid FarmFishUpdateRequest request){
+        return ApiResponse.<FarmFishGetAllResponse>builder()
+                .result(farmFishService.updateFarmFish(request))
                 .build();
     }
 }
