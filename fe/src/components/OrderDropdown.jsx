@@ -30,14 +30,21 @@ const CustomMenu = forwardRef(({ children, style, className }, ref) => {
 
 const OrderDropdown = ({
   items,
-  selectedItems,
-  setSelectedItem,
+  setSortBy,
+  setOrder
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(items[0]);
 
   const handleClickToggle = () => {
     setIsOpen(!isOpen);
   };
+
+  const handleOnClick = (item) =>{
+    setSelectedItem(item)
+    setOrder(item.order);
+    setSortBy(item.sortBy);
+  }
 
   return (
     <Dropdown
@@ -49,7 +56,7 @@ const OrderDropdown = ({
       <Dropdown.Toggle className="bg-white w-100 text-start text-secondary overflow-hidden d-flex justify-content-between align-items-center border-secondary-subtle">
         <span className={`${style.dropdown__toogle__span}`}>
           {" "}
-          {selectedItems?.name}
+          {selectedItem?.name}
         </span>
       </Dropdown.Toggle>
 
@@ -61,9 +68,9 @@ const OrderDropdown = ({
           {items?.map((item) => (
             <Dropdown.Item
               key={item?.name}
-              onClick={() => setSelectedItem(item)}
+              onClick={() => handleOnClick(item) }
               className={`${
-                item?.name === selectedItems?.name ? "active" : ""
+                item === selectedItem ? "active" : ""
               } ${style.dropdown__item} py-1 ps-2 fs-6`}
             >
               {item.name}

@@ -70,7 +70,7 @@ const FilterDropdown = ({
           </Dropdown.Item>
           {items?.map((item) => (
             <Dropdown.Item
-              key={item?.name}
+              key={item?.name ? item?.name : item }
               onClick={() => setSelectedItem(item)}
               className={`${
                 item?.name === selectedItems?.name ? "active" : ""

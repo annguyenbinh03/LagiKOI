@@ -5,84 +5,99 @@ import FishCard from "../components/FishCard";
 import style from "../assets/scss/Fish.module.scss";
 import FilterDropdown from "../components/FilterDropdown";
 
+import { getAllFarmFish } from "../services/farmFishService";
 import { getAllFishCategory } from "../services/fishCategoryService";
 import OrderDropdown from "../components/OrderDropdown";
 
-const FISH_GENDER= [
+const FISH_GENDER = [
   {
     name: "Đực",
-    value: "male"
+    value: "male",
   },
   {
     name: "Cái",
-    value: "female"
+    value: "female",
   },
 ];
 
-const FARMS = [
-  {
-    name: "Hiroi Koi Farm",
-  },
-  {
-    name: "Maruhide Koi Farm",
-  },
-  {
-    name: "Hiroi Koi Farm",
-  },
-];
-
-const ORDER_BY= [
+const ORDER_BY = [
   {
     name: "Mới nhất",
-    value: "newest"
+    sortBy: "product.createdAt",
+    order: "desc",
   },
   {
     name: "Cũ nhất",
-    value: "oldest"
+    sortBy: "product.createdAt",
+    order: "asc",
   },
   {
     name: "Giá giảm dần",
-    value: "priceDesc"
+    sortBy: "product.price",
+    order: "desc",
   },
   {
     name: "Giá tăng dần",
-    value: "priceAsc"
-  }
-]
+    sortBy: "product.price",
+    order: "asc",
+  },
+];
 
 const Fish = () => {
   const [fishLoading, setFishLoading] = useState(true);
   const [categoryLoading, setCategoryLoading] = useState(true);
+  const [farmFishLoading, setFarmFishLoading] = useState(true);
 
   const [page, setPage] = useState(0);
   const [pageSize, setPageSize] = useState(8);
   const [sortBy, setSortBy] = useState(null);
-  
+
   const [categoryList, setCategoryList] = useState([]);
+  const [farmList, setFarmFish] = useState([]);
 
   const [fish, setFish] = useState({});
-  const [name, setName] = useState('');
+  const [name, setName] = useState("");
   const [category, setCategory] = useState(null);
   const [gender, setGender] = useState(null);
   const [farm, setFarm] = useState(null);
-  const [order, setOrder] = useState(null);
+  const [order, setOrder] = useState(ORDER_BY[0]);
+
+  const fetchFarmFish = async () => {
+    try {
+      const response = await getAllFarmFish();
+      console.log(response);
+      setFarmFish(response.result);
+    } catch (error) {
+      console.error("Failed to fetch fish data:", error);
+      setFish([]);
+    } finally {
+      setFarmFishLoading(false);
+    }
+  };
 
   const fetchFishData = async () => {
+    setFishLoading(true);
     try {
-      const response = await getFish(page, pageSize, 
-                                sortBy ? sortBy : 'id', 
-                                order ? order : 'desc', 
-                                name !== '' ? name : 'all', 
-                                gender?.value ? gender.value : 'all', 
-                                farm ? farm : 'all', 
-                                category ? category : 'all');
+      const response = await getFish(
+        page,
+        pageSize,
+        sortBy ? sortBy : "product.createdAt",
+        order ? order : "desc",
+        name !== "" ? name : "all",
+        gender?.value ? gender.value : "all",
+        farm ? farm.name : "all",
+        category ? category.name : "all"
+      );
       console.log(response);
       setFish(response.result);
     } catch (error) {
       console.error("Failed to fetch fish data:", error);
       setFish([]);
     } finally {
-      setFishLoading(false);
+      setTimeout(() => {
+        setFishLoading(false);
+      }, 200);
+
     }
   };
 
@@ -98,9 +113,19 @@ const Fish = () => {
       setCategoryLoading(false);
     }
   };
-  useState(() => {
+
+  const handleClickFilterButton = () => {
     fetchFishData();
+  };
+
+  const handleOnChange = (event) =>{
+      setName(event.target.value);
+  }
+
+  useState(() => {
+    fetchFarmFish();
     fetchFishCategories();
+    fetchFishData();
   }, []);
 
   return (
@@ -113,8 +138,10 @@ const Fish = () => {
           <div className="row mb-3">
             <div className="col-md-3">
               <input
+              onChange={handleOnChange}
                 className="form-control w-100 h-100 bg-white border-secondary-subtle"
                 placeholder="Lọc theo tên"
+                value={name}
               />
             </div>
             <div className="col-md-3">
@@ -138,34 +165,40 @@ const Fish = () => {
                 selectedItems={farm}
                 setSelectedItem={setFarm}
                 placeHolder={"Chọn trang trại"}
-                items={FARMS}
+                items={farmList}
               />
             </div>
           </div>
           <div className="row d-flex justify-content-start">
             <div className="col-md-3">
               <OrderDropdown
-                selectedItems={order}
-                setSelectedItem={setOrder}
                 items={ORDER_BY}
+                setSortBy={setSortBy}
+                setOrder={setOrder}
               />
             </div>
             <div className="col-md-3">
-              <button type="button" class="btn btn-secondary">
+              <button
+                type="button"
+                onClick={handleClickFilterButton}
+                className="btn btn-secondary"
+              >
                 Lọc danh sách
               </button>
             </div>
           </div>
         </div>
-        {fishLoading ? (
-          <Loading />
-        ) : (
-          <div className="row px-5 pt-4 text-center">
-            {fish?.map((item) => {
-              return <FishCard key={item.id} fish={item} />;
-            })}
-          </div>
-        )}
+        <div className=" px-5 pt-4 text-center" style={{ minHeight: "800px" }}>
+          {fishLoading ? (
+            <Loading />
+          ) : (
+            <div className={`row`}>
+              {fish?.map((item) => {
+                return <FishCard key={item.id} fish={item} />;
+              })}
+            </div>
+          )}
+        </div>
       </div>
     </>
   );

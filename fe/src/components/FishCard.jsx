@@ -15,7 +15,7 @@ const FishCard = ({ fish }) => {
             />
           </div>
           <div className="card-body">
-            <h5 className={`card-title text-start mb-2 ${style.card__title}`}> {fish.code + ` ` + fish.name}</h5>
+            <h5 className={`card-title text-start mb-2 ${style.card__title}`}> {fish.name}</h5>
             <div className="text-start text-danger fw-bold">
               {fish.price ? formatVND(fish.price) : "0"}
             </div>

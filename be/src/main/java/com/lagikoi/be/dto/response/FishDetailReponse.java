@@ -13,8 +13,6 @@ import java.util.List;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class FishDetailReponse {
     Integer id;
-    //Fish code, #001, #002
-    String code;
     String name;
     String description;
     BigDecimal price;

@@ -12,7 +12,8 @@ import java.util.List;
 @Repository
 public interface FarmFishRepository extends JpaRepository<FarmFish, Integer> {
     @Query("SELECT new com.lagikoi.be.dto.response.FarmFishGetAllResponse(ff.id, ff.name, ff.description) " +
-            "FROM FarmFish ff")
+            "FROM FarmFish ff " +
+            "ORDER BY ff.name")
     List<FarmFishGetAllResponse> getAll();
 
     @Query("SELECT new com.lagikoi.be.dto.response.FarmFishGetAllResponse(ff.id, ff.name, ff.description) " +

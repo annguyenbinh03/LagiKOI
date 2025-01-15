@@ -27,7 +27,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -45,10 +44,6 @@ public class FishService {
     public List<FishGetAllResponse> getAllFish() {
         List<FishGetAllResponse> fishGetAllResponseList = fishRepository.getAllFish();
 
-        for (FishGetAllResponse fishGetAllResponse : fishGetAllResponseList) {
-            fishGetAllResponse.setCode(generateCodeForFish(fishGetAllResponse.getId()));
-        }
-
         if (fishGetAllResponseList.isEmpty())
             throw new AppException(ErrorCode.FISH_LIST_NOT_FOUND);
 
@@ -65,13 +60,7 @@ public class FishService {
 
         Page<FishGetAllResponse> fishPage = fishRepository.getFish( PageRequest.of(page, size, Sort.by(sortDirection, sortBy)), name, gender, farmName, categoryName);
 
-        List<FishGetAllResponse> fishGetAllResponseList = fishPage.getContent().stream()
-                .map(fish -> {
-                    FishGetAllResponse response = fish;
-                    response.setCode(generateCodeForFish(fish.getId()));
-                    return response;
-                })
-                .collect(Collectors.toList());
+        List<FishGetAllResponse> fishGetAllResponseList = fishPage.getContent().stream().toList();
 
         if (fishGetAllResponseList.isEmpty())
             throw new AppException(ErrorCode.FISH_LIST_NOT_FOUND);
@@ -85,10 +74,7 @@ public class FishService {
         if (response == null)
             throw new AppException(ErrorCode.FISH_NOT_FOUND);
 
-        response.setCode(generateCodeForFish(fishId));
-
         response.setImages(productImageRepository.getProductImageByFishId(fishId));
-
         return response;
     }
 
@@ -115,10 +101,6 @@ public class FishService {
         saveImagesForFish(request.getImageUrls(), product);
 
         return fish.getId();
-    }
-
-    public static String generateCodeForFish(int id) {
-        return id < 1000 ? String.format("#%03d", id) : "#" + id;
     }
 
     private void saveImagesForFish(List<ProductImageCreationRequest> requestFishImages, Product product) {

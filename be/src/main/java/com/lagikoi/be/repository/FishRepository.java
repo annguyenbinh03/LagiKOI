@@ -29,9 +29,10 @@ public interface FishRepository extends JpaRepository<Fish, Integer> {
             " WHERE f.isDeleted = false AND f.id = :fishId")
     FishDetailReponse getFishInfo(@Param("fishId") Integer fishId);
 
-    @Query("SELECT new com.lagikoi.be.dto.response.FishGetAllResponse( f.id, f.product.name, f.product.description, f.product.price, f.product.stock, f.yob, f.gender, " +
+    @Query("SELECT new com.lagikoi.be.dto.response.FishGetAllResponse( f.id, p.name, p.description, p.price, p.stock, f.yob, f.gender, " +
             "f.size, f.farmFish.name, f.viewCount, kc.name, pi.imageUrl )" +
             "FROM Fish f " +
+            "JOIN Product p ON p = f.product " +
             "JOIN FishCategory kc ON f.category = kc " +
             "JOIN ProductImage pi ON f.product = pi.product " +
             "WHERE f.isDeleted = false AND pi.displayOrder = 1 " +
