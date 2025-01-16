@@ -32,7 +32,7 @@ const FishCard = ({ fish }) => {
               <div>
                 <strong> Giống cá:</strong> {fish.category ? fish.category : ""}
               </div>
-              <div>
+              <div className={`${style.card__body__farmName}`}>
                 <strong>Trang trại:</strong>{" "}
                 {fish.farmName ? fish.farmName : ""}
               </div>

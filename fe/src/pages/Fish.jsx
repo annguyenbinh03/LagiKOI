@@ -3,12 +3,12 @@ import Loading from "../components/Loading";
 import FishCard from "../components/FishCard";
 import style from "../assets/scss/Fish.module.scss";
 import FilterDropdown from "../components/FilterDropdown";
-import { Pagination } from "react-bootstrap";
 
 import { getFish, getTotalFish } from "../services/fishService";
 import { getAllFarmFish } from "../services/farmFishService";
 import { getAllFishCategory } from "../services/fishCategoryService";
 import OrderDropdown from "../components/OrderDropdown";
+import CustomPagination from "../components/CustomPagination";
 
 const FISH_GENDER = [
   {
@@ -136,47 +136,6 @@ const Fish = () => {
     setName(event.target.value);
   };
 
-  const handlePageClick = (pageNumber) => {
-    setPage(pageNumber);
-  };
-
-  const renderPaginationItems = () => {
-    const items = [];
-    const maxPagesToShow = 5;
-    const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
-    const endPage = Math.min(pageCount, page + Math.floor(maxPagesToShow / 2));
-    if (startPage > 1) {
-      items.push(
-        <Pagination.Item key={1} active={page === 1} onClick={() => handlePageClick(1)}>
-          1
-        </Pagination.Item>
-      );
-  
-      if (startPage > 2) {
-        items.push(<Pagination.Ellipsis key="start-ellipsis" disabled />);
-      }
-    }
-    for (let i = startPage; i <= endPage; i++) {
-      items.push(
-        <Pagination.Item key={i} active={i === page} onClick={() => handlePageClick(i)}>
-          {i}
-        </Pagination.Item>
-      );
-    }
-    if (endPage < pageCount) {
-      if (endPage < pageCount - 1) {
-        items.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
-      }
-  
-      items.push(
-        <Pagination.Item key={pageCount} active={page === pageCount} onClick={() => handlePageClick(pageCount)}>
-          {pageCount}
-        </Pagination.Item>
-      );
-    }
-    return items;
-  };
-
   useEffect(() => {
     fetchFishData();
     fetchTotalFish();
@@ -260,17 +219,7 @@ const Fish = () => {
             </div>
           )}
         </div>
-        <div className="d-flex justify-content-center">
-          <Pagination >
-            <Pagination.Prev
-              onClick={() => page > 1 && handlePageClick(page - 1)}
-            />
-            {renderPaginationItems()}
-            <Pagination.Next
-              onClick={() => page < pageCount && handlePageClick(page + 1)}
-            />
-          </Pagination>
-        </div>
+        <CustomPagination page={page} setPage={setPage} pageCount={pageCount} />
       </div>
     </>
   );
