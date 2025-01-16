@@ -2,6 +2,7 @@ import axiosClient from "./axiosClient";
 
 const END_POINTS = {
   GET_FISH: "fish/get",
+  TOTAL_FISH: "fish/available/total"
 };
 
 export const getFish = (page = 0, size = 8, sortBy = 'id', order = 'desc', name = 'all', gender = 'all', farmName = 'all', categoryName = 'all') => {
@@ -16,4 +17,9 @@ export const getFish = (page = 0, size = 8, sortBy = 'id', order = 'desc', name 
     params.append('categoryName', categoryName);
     const url = `${END_POINTS.GET_FISH}?${params.toString()}`;
     return axiosClient.get(url);
+};
+
+
+export const getTotalFish = () => {
+  return axiosClient.get(`${END_POINTS.TOTAL_FISH}`);
 };

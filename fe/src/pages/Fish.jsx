@@ -1,10 +1,11 @@
-import { useState } from "react";
-import { getFish } from "../services/fishService";
+import { useEffect, useState } from "react";
 import Loading from "../components/Loading";
 import FishCard from "../components/FishCard";
 import style from "../assets/scss/Fish.module.scss";
 import FilterDropdown from "../components/FilterDropdown";
+import { Pagination } from "react-bootstrap";
 
+import { getFish, getTotalFish } from "../services/fishService";
 import { getAllFarmFish } from "../services/farmFishService";
 import { getAllFishCategory } from "../services/fishCategoryService";
 import OrderDropdown from "../components/OrderDropdown";
@@ -47,8 +48,10 @@ const Fish = () => {
   const [fishLoading, setFishLoading] = useState(true);
   const [categoryLoading, setCategoryLoading] = useState(true);
   const [farmFishLoading, setFarmFishLoading] = useState(true);
+  const [totalFishLoading, setTotalFishLoading] = useState(true);
 
-  const [page, setPage] = useState(0);
+  const [page, setPage] = useState(1);
+  const [pageCount, setPageCount] = useState(0);
   const [pageSize, setPageSize] = useState(8);
   const [sortBy, setSortBy] = useState(null);
 
@@ -61,6 +64,18 @@ const Fish = () => {
   const [gender, setGender] = useState(null);
   const [farm, setFarm] = useState(null);
   const [order, setOrder] = useState(ORDER_BY[0]);
+
+  const fetchTotalFish = async () => {
+    try {
+      const response = await getTotalFish();
+      console.log(response);
+      setPageCount(Math.ceil(response.result / pageSize));
+    } catch (error) {
+      console.error("Failed to fetch fish data:", error);
+    } finally {
+      setTotalFishLoading(false);
+    }
+  };
 
   const fetchFarmFish = async () => {
     try {
@@ -79,7 +94,7 @@ const Fish = () => {
     setFishLoading(true);
     try {
       const response = await getFish(
-        page,
+        page - 1,
         pageSize,
         sortBy ? sortBy : "product.createdAt",
         order ? order : "desc",
@@ -97,7 +112,6 @@ const Fish = () => {
       setTimeout(() => {
         setFishLoading(false);
       }, 200);
-
     }
   };
 
@@ -118,11 +132,58 @@ const Fish = () => {
     fetchFishData();
   };
 
-  const handleOnChange = (event) =>{
-      setName(event.target.value);
-  }
+  const handleOnChange = (event) => {
+    setName(event.target.value);
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setPage(pageNumber);
+  };
+
+  const renderPaginationItems = () => {
+    const items = [];
+    const maxPagesToShow = 5;
+    const startPage = Math.max(1, page - Math.floor(maxPagesToShow / 2));
+    const endPage = Math.min(pageCount, page + Math.floor(maxPagesToShow / 2));
+    if (startPage > 1) {
+      items.push(
+        <Pagination.Item key={1} active={page === 1} onClick={() => handlePageClick(1)}>
+          1
+        </Pagination.Item>
+      );
+  
+      if (startPage > 2) {
+        items.push(<Pagination.Ellipsis key="start-ellipsis" disabled />);
+      }
+    }
+    for (let i = startPage; i <= endPage; i++) {
+      items.push(
+        <Pagination.Item key={i} active={i === page} onClick={() => handlePageClick(i)}>
+          {i}
+        </Pagination.Item>
+      );
+    }
+    if (endPage < pageCount) {
+      if (endPage < pageCount - 1) {
+        items.push(<Pagination.Ellipsis key="end-ellipsis" disabled />);
+      }
+  
+      items.push(
+        <Pagination.Item key={pageCount} active={page === pageCount} onClick={() => handlePageClick(pageCount)}>
+          {pageCount}
+        </Pagination.Item>
+      );
+    }
+    return items;
+  };
+
+  useEffect(() => {
+    fetchFishData();
+    fetchTotalFish();
+  }, [page, pageSize, sortBy, order, name, gender, farm, category]);
 
   useState(() => {
+    fetchTotalFish();
     fetchFarmFish();
     fetchFishCategories();
     fetchFishData();
@@ -134,11 +195,11 @@ const Fish = () => {
         <h1 className="fs-1 text-center py-3 fw-bold">CÁ KOI</h1>
       </div>
       <div className="container bg-white">
-        <div className="search-form pb-2 bg-secondary-subtle px-3 py-3">
+        <div className="search-form bg-secondary-subtle px-3 py-3 rounded">
           <div className="row mb-3">
             <div className="col-md-3">
               <input
-              onChange={handleOnChange}
+                onChange={handleOnChange}
                 className="form-control w-100 h-100 bg-white border-secondary-subtle"
                 placeholder="Lọc theo tên"
                 value={name}
@@ -198,6 +259,17 @@ const Fish = () => {
               })}
             </div>
           )}
+        </div>
+        <div className="d-flex justify-content-center">
+          <Pagination >
+            <Pagination.Prev
+              onClick={() => page > 1 && handlePageClick(page - 1)}
+            />
+            {renderPaginationItems()}
+            <Pagination.Next
+              onClick={() => page < pageCount && handlePageClick(page + 1)}
+            />
+          </Pagination>
         </div>
       </div>
     </>
